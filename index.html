@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PMS & ERP Kapal — Ultimate Maritime Learning | Rafael Sukirno, CE</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════ RESET & VARS ═══════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg-deep:#020c18;--bg-panel:#050f1e;--bg-card:#07182a;
+  --bg-card2:#0a1f35;--bg-card3:#0d2540;
+  --border:#163352;--border-b:#1e5080;--border-br:#255080;
+  --cyan:#00d4ff;--teal:#00b894;--orange:#ff7043;
+  --yellow:#ffd600;--red:#ff1744;--green:#00e676;--purple:#7c4dff;
+  --white:#e8f4ff;--text-sec:#6aa3c8;--text-dim:#2e6080;
+  --mono:'Share Tech Mono',monospace;
+  --display:'Exo 2',sans-serif;
+  --ui:'Rajdhani',sans-serif;
+  --orb:'Orbitron',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg-deep);color:var(--white);font-family:var(--display);overflow-x:hidden;line-height:1.6;}
+
+/* ═══════════════ ATMOSPHERE ═══════════════ */
+.atm-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.022) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+.atm-scanline{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.055) 2px,rgba(0,0,0,0.055) 4px);pointer-events:none;z-index:9997;}
+.atm-vignette{position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,0.55) 100%);pointer-events:none;z-index:0;}
+
+/* ═══════════════ NAV ═══════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,12,24,0.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:62px;}
+.nav-logo{font-family:var(--orb);color:var(--cyan);font-size:0.68rem;letter-spacing:2px;display:flex;align-items:center;gap:8px;white-space:nowrap;}
+.nav-logo .sep{color:var(--orange);}
+.nav-logo .sub{color:var(--text-sec);font-size:0.55rem;letter-spacing:3px;font-family:var(--mono);}
+.nav-links{display:flex;gap:0.15rem;list-style:none;overflow-x:auto;scrollbar-width:none;}
+.nav-links::-webkit-scrollbar{display:none;}
+.nav-links a{color:var(--text-sec);text-decoration:none;font-family:var(--ui);font-size:0.7rem;font-weight:600;letter-spacing:1px;padding:0.25rem 0.6rem;border:1px solid transparent;border-radius:3px;transition:all 0.2s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:var(--cyan);border-color:var(--cyan);background:rgba(0,212,255,0.07);}
+
+/* ═══════════════ LAYOUT ═══════════════ */
+main{position:relative;z-index:1;padding-top:62px;}
+section{max-width:1300px;margin:0 auto;padding:4.5rem 2rem;scroll-margin-top:70px;}
+.sec-divider{max-width:1300px;margin:0 auto;padding:0 2rem;}
+.sec-divider hr{border:none;border-top:1px solid var(--border);}
+
+/* ═══════════════ SECTION HEADERS ═══════════════ */
+.section-header{margin-bottom:2.5rem;}
+.section-tag{display:inline-block;font-family:var(--mono);font-size:0.65rem;color:var(--cyan);letter-spacing:4px;margin-bottom:0.5rem;opacity:0.8;}
+h2.section-title{font-family:var(--display);font-size:clamp(1.8rem,3.5vw,2.7rem);font-weight:900;line-height:1.15;margin-bottom:0.9rem;}
+.section-desc{color:var(--text-sec);font-size:0.92rem;line-height:1.8;max-width:800px;border-left:3px solid var(--cyan);padding-left:1.1rem;}
+
+/* ═══════════════ HERO ═══════════════ */
+#intro{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;padding:2rem;}
+.hero-glow{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,0.055) 0%,transparent 70%);pointer-events:none;}
+.ship-emoji{font-size:5.5rem;display:block;margin-bottom:1.2rem;filter:drop-shadow(0 0 32px rgba(0,212,255,0.6));animation:float 4s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.hero-badge{font-family:var(--mono);font-size:0.68rem;color:var(--cyan);letter-spacing:5px;border:1px solid var(--cyan);padding:0.4rem 1.4rem;border-radius:2px;margin-bottom:1.4rem;display:inline-block;animation:pulse-border 2.5s ease-in-out infinite;}
+@keyframes pulse-border{0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,0.4)}50%{box-shadow:0 0 0 10px rgba(0,212,255,0)}}
+h1.hero-title{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);font-weight:900;line-height:1.1;margin-bottom:0.5rem;background:linear-gradient(135deg,#fff 0%,var(--cyan) 45%,var(--teal) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-family:var(--ui);font-size:1rem;color:var(--orange);font-weight:700;letter-spacing:4px;margin-bottom:1rem;}
+.hero-desc{font-size:0.95rem;color:var(--text-sec);max-width:640px;line-height:1.8;margin-bottom:2rem;}
+.hero-stats{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem;}
+.h-stat{text-align:center;}
+.h-stat-num{font-family:var(--orb);font-size:1.8rem;font-weight:900;color:var(--cyan);display:block;line-height:1;margin-bottom:0.3rem;}
+.h-stat-label{font-family:var(--mono);font-size:0.6rem;color:var(--text-sec);letter-spacing:2px;}
+.hero-cards{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem;}
+.hero-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;width:195px;text-align:left;transition:all 0.3s;position:relative;overflow:hidden;cursor:pointer;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--teal));transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.hero-card:hover::before{transform:scaleX(1);}
+.hero-card:hover{border-color:var(--border-b);transform:translateY(-5px);box-shadow:0 10px 35px rgba(0,212,255,0.12);}
+.hero-card-icon{font-size:1.8rem;margin-bottom:0.7rem;}
+.hero-card h3{font-family:var(--ui);font-size:0.88rem;font-weight:700;color:var(--cyan);margin-bottom:0.4rem;letter-spacing:1px;}
+.hero-card p{font-size:0.78rem;color:var(--text-sec);line-height:1.5;}
+.btn-start{display:inline-flex;align-items:center;gap:0.6rem;background:linear-gradient(135deg,var(--cyan),var(--teal));color:var(--bg-deep);font-family:var(--ui);font-weight:700;font-size:0.95rem;letter-spacing:2px;padding:0.85rem 2.2rem;border-radius:4px;text-decoration:none;transition:all 0.3s;border:none;cursor:pointer;}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,212,255,0.4);}
+
+/* ═══════════════ CARDS ═══════════════ */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.4rem;margin:2rem 0;}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:all 0.3s;position:relative;overflow:hidden;}
+.card:hover{border-color:var(--border-b);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,212,255,0.1);}
+.card-icon{font-size:2rem;margin-bottom:0.9rem;}
+.card h3{font-family:var(--ui);font-weight:700;font-size:1rem;color:var(--cyan);margin-bottom:0.6rem;letter-spacing:1px;}
+.card p,.card li{font-size:0.86rem;color:var(--text-sec);line-height:1.7;}
+.card ul{list-style:none;padding:0;}
+.card ul li{padding:0.25rem 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.card ul li:last-child{border:none;}
+.card ul li::before{content:'▸ ';color:var(--cyan);}
+
+/* ═══════════════ POPUP TRIGGER BUTTON ═══════════════ */
+.popup-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,255,0.08);border:1px solid var(--cyan);color:var(--cyan);font-family:var(--ui);font-size:0.75rem;font-weight:700;letter-spacing:1.5px;padding:0.4rem 1rem;border-radius:3px;cursor:pointer;transition:all 0.2s;margin-top:0.8rem;}
+.popup-btn:hover{background:rgba(0,212,255,0.18);box-shadow:0 0 14px rgba(0,212,255,0.25);}
+.popup-btn .icon{font-size:0.85rem;}
+
+/* ═══════════════ MODAL OVERLAY ═══════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(2,8,18,0.88);backdrop-filter:blur(10px);z-index:5000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay.active{opacity:1;pointer-events:all;}
+.modal-box{background:var(--bg-card2);border:1px solid var(--border-b);border-top:3px solid var(--cyan);border-radius:12px;max-width:720px;width:100%;max-height:88vh;overflow-y:auto;position:relative;transform:translateY(24px) scale(0.98);transition:transform 0.25s;scrollbar-width:thin;scrollbar-color:var(--border-b) var(--bg-card);}
+.modal-overlay.active .modal-box{transform:translateY(0) scale(1);}
+.modal-header{position:sticky;top:0;background:var(--bg-card2);border-bottom:1px solid var(--border);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;z-index:1;gap:1rem;}
+.modal-title{font-family:var(--ui);font-size:1.15rem;font-weight:700;color:var(--cyan);letter-spacing:1px;}
+.modal-close{background:rgba(255,23,68,0.1);border:1px solid var(--red);color:var(--red);font-size:1rem;font-weight:700;width:32px;height:32px;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+.modal-close:hover{background:rgba(255,23,68,0.25);}
+.modal-body{padding:1.5rem;}
+.modal-section{margin-bottom:1.4rem;}
+.modal-section h4{font-family:var(--ui);color:var(--yellow);font-size:0.95rem;font-weight:700;letter-spacing:1px;margin-bottom:0.6rem;border-bottom:1px solid var(--border);padding-bottom:0.4rem;}
+.modal-section p{font-size:0.88rem;color:var(--text-sec);line-height:1.8;margin-bottom:0.5rem;}
+.modal-section ul{list-style:none;padding:0;}
+.modal-section ul li{font-size:0.87rem;color:var(--text-sec);line-height:1.7;padding:0.2rem 0;}
+.modal-section ul li::before{content:'▹ ';color:var(--cyan);}
+.modal-tag{display:inline-block;font-family:var(--mono);font-size:0.65rem;padding:0.2rem 0.6rem;border-radius:20px;margin:0.15rem;vertical-align:middle;}
+.tag-green{background:rgba(0,230,118,0.12);color:var(--green);border:1px solid rgba(0,230,118,0.3);}
+.tag-yellow{background:rgba(255,214,0,0.12);color:var(--yellow);border:1px solid rgba(255,214,0,0.3);}
+.tag-red{background:rgba(255,23,68,0.12);color:var(--red);border:1px solid rgba(255,23,68,0.3);}
+.tag-cyan{background:rgba(0,212,255,0.12);color:var(--cyan);border:1px solid rgba(0,212,255,0.3);}
+.tag-orange{background:rgba(255,112,67,0.12);color:var(--orange);border:1px solid rgba(255,112,67,0.3);}
+.modal-links{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:0.8rem;}
+.modal-link{display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-family:var(--mono);font-size:0.7rem;color:var(--teal);border:1px solid rgba(0,184,148,0.4);padding:0.35rem 0.8rem;border-radius:3px;transition:all 0.2s;background:rgba(0,184,148,0.06);}
+.modal-link:hover{border-color:var(--teal);background:rgba(0,184,148,0.14);color:#fff;}
+.modal-link .ext-icon{font-size:0.7rem;}
+.modal-highlight{background:rgba(0,212,255,0.06);border-left:3px solid var(--cyan);padding:0.8rem 1rem;border-radius:0 6px 6px 0;margin:0.8rem 0;font-size:0.87rem;color:var(--white);}
+.modal-warning{background:rgba(255,214,0,0.07);border-left:3px solid var(--yellow);padding:0.8rem 1rem;border-radius:0 6px 6px 0;margin:0.8rem 0;font-size:0.87rem;color:var(--yellow);}
+.modal-critical{background:rgba(255,23,68,0.07);border-left:3px solid var(--red);padding:0.8rem 1rem;border-radius:0 6px 6px 0;margin:0.8rem 0;font-size:0.87rem;color:#ff8080;}
+.modal-table{width:100%;border-collapse:collapse;font-size:0.83rem;margin:0.8rem 0;}
+.modal-table th{background:rgba(0,212,255,0.08);color:var(--cyan);font-family:var(--ui);padding:0.6rem 0.8rem;text-align:left;border-bottom:1px solid var(--border-b);}
+.modal-table td{padding:0.55rem 0.8rem;border-bottom:1px solid var(--border);color:var(--text-sec);vertical-align:top;}
+.modal-table tr:hover td{background:rgba(0,212,255,0.03);}
+
+/* ═══════════════ INSTRUCTOR BOX ═══════════════ */
+.instructor-box{background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(0,184,148,0.04));border:1px solid var(--border-b);border-left:4px solid var(--cyan);border-radius:10px;padding:1.4rem 1.8rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.instr-avatar{font-size:2rem;min-width:40px;}
+.instr-text{font-size:0.88rem;color:var(--white);line-height:1.8;}
+.instr-text strong{color:var(--cyan);}
+.instr-text .cite{display:block;margin-top:0.4rem;font-family:var(--mono);font-size:0.68rem;color:var(--text-dim);letter-spacing:1px;}
+
+/* ═══════════════ COMPARE TABLE ═══════════════ */
+.compare-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.86rem;overflow-x:auto;display:block;}
+.compare-table th{background:var(--bg-card2);color:var(--cyan);font-family:var(--ui);font-weight:700;letter-spacing:1px;padding:0.9rem 1rem;text-align:left;border-bottom:2px solid var(--cyan);white-space:nowrap;}
+.compare-table td{padding:0.8rem 1rem;border-bottom:1px solid var(--border);color:var(--text-sec);vertical-align:top;}
+.compare-table tr:hover td{background:rgba(0,212,255,0.03);}
+.good{color:var(--green);font-weight:700;}
+.warn{color:var(--yellow);font-weight:700;}
+.bad{color:var(--red);font-weight:700;}
+
+/* ═══════════════ FLOW CHART ═══════════════ */
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.5rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;margin:1.5rem 0;}
+.flow-step{background:var(--bg-card2);border:1px solid var(--border-b);border-radius:6px;padding:0.6rem 1rem;font-family:var(--ui);font-size:0.78rem;font-weight:600;color:var(--cyan);text-align:center;min-width:100px;}
+.flow-arrow{color:var(--teal);font-size:1.2rem;font-weight:700;}
+
+/* ═══════════════ BADGE ═══════════════ */
+.badge{display:inline-block;padding:0.2rem 0.7rem;border-radius:20px;font-family:var(--mono);font-size:0.68rem;font-weight:600;}
+.badge-green{background:rgba(0,230,118,0.12);color:var(--green);border:1px solid rgba(0,230,118,0.35);}
+.badge-yellow{background:rgba(255,214,0,0.12);color:var(--yellow);border:1px solid rgba(255,214,0,0.35);}
+.badge-red{background:rgba(255,23,68,0.12);color:var(--red);border:1px solid rgba(255,23,68,0.35);}
+.badge-cyan{background:rgba(0,212,255,0.12);color:var(--cyan);border:1px solid rgba(0,212,255,0.35);}
+.badge-orange{background:rgba(255,112,67,0.12);color:var(--orange);border:1px solid rgba(255,112,67,0.35);}
+
+/* ═══════════════ PMS TABLE ═══════════════ */
+.pms-table{width:100%;border-collapse:collapse;font-size:0.84rem;overflow-x:auto;display:block;}
+.pms-table th{background:var(--bg-card2);color:var(--cyan);font-family:var(--ui);font-weight:700;padding:0.9rem 1rem;text-align:left;border-bottom:2px solid var(--border-b);white-space:nowrap;}
+.pms-table td{padding:0.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-sec);vertical-align:middle;}
+.pms-table tr.overdue td{background:rgba(255,23,68,0.07);}
+.pms-table tr.warning td{background:rgba(255,214,0,0.05);}
+.pms-table tr:hover td{background:rgba(0,212,255,0.03);}
+.progress-container{background:var(--bg-deep);border-radius:4px;height:8px;overflow:hidden;min-width:80px;display:inline-block;vertical-align:middle;}
+.progress-bar{height:100%;border-radius:4px;transition:width 0.4s;}
+.progress-green{background:linear-gradient(90deg,var(--teal),var(--green));}
+.progress-yellow{background:linear-gradient(90deg,var(--orange),var(--yellow));}
+.progress-red{background:linear-gradient(90deg,#cc0000,var(--red));}
+
+/* ═══════════════ SIMULATOR ═══════════════ */
+.simulator{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.8rem;margin:1.5rem 0;}
+.sim-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.sim-field{display:flex;flex-direction:column;gap:0.4rem;}
+.sim-label{font-family:var(--mono);font-size:0.68rem;color:var(--text-sec);letter-spacing:1px;}
+.sim-select,.sim-input{background:var(--bg-card2);border:1px solid var(--border-b);border-radius:4px;color:var(--white);font-family:var(--display);font-size:0.85rem;padding:0.55rem 0.8rem;outline:none;transition:border 0.2s;}
+.sim-select:focus,.sim-input:focus{border-color:var(--cyan);}
+.sim-result{background:var(--bg-deep);border-radius:10px;padding:1.3rem;border:1px solid var(--border);min-height:80px;}
+.sim-result-title{font-family:var(--ui);font-size:0.8rem;font-weight:700;color:var(--text-dim);letter-spacing:2px;margin-bottom:0.8rem;}
+.btn-calc{background:linear-gradient(135deg,var(--cyan),var(--teal));color:var(--bg-deep);font-family:var(--ui);font-weight:700;font-size:0.85rem;letter-spacing:1.5px;padding:0.6rem 1.4rem;border-radius:4px;border:none;cursor:pointer;transition:all 0.2s;width:100%;}
+.btn-calc:hover{box-shadow:0 4px 20px rgba(0,212,255,0.35);transform:translateY(-1px);}
+
+/* ═══════════════ ALARM DEMO ═══════════════ */
+.alarm-cards-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem;margin:1.5rem 0;}
+.alarm-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;transition:border 0.3s;}
+.alarm-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;}
+.alarm-asset-name{font-family:var(--ui);font-weight:700;font-size:0.95rem;}
+.alarm-badge{font-family:var(--mono);font-size:0.68rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:3px;}
+.alarm-badge.normal{background:rgba(0,230,118,0.15);color:var(--green);border:1px solid rgba(0,230,118,0.4);}
+.alarm-badge.warning{background:rgba(255,214,0,0.15);color:var(--yellow);border:1px solid rgba(255,214,0,0.4);}
+.alarm-badge.overdue{background:rgba(255,23,68,0.15);color:var(--red);border:1px solid rgba(255,23,68,0.4);}
+.alarm-info{font-size:0.82rem;color:var(--text-sec);margin-bottom:0.5rem;}
+.alarm-action{font-size:0.78rem;color:var(--orange);font-style:italic;}
+.sim-btn-row{display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:1.2rem;}
+.sim-btn{background:transparent;border:1px solid;font-family:var(--ui);font-size:0.78rem;font-weight:700;letter-spacing:1px;padding:0.5rem 1.1rem;border-radius:4px;cursor:pointer;transition:all 0.2s;}
+.sim-btn.cyan{color:var(--cyan);border-color:var(--cyan);}
+.sim-btn.cyan:hover{background:rgba(0,212,255,0.12);}
+.sim-btn.red{color:var(--red);border-color:var(--red);}
+.sim-btn.red:hover{background:rgba(255,23,68,0.12);}
+.sim-btn.green{color:var(--green);border-color:var(--green);}
+.sim-btn.green:hover{background:rgba(0,230,118,0.12);}
+.sim-btn.yellow{color:var(--yellow);border-color:var(--yellow);}
+.sim-btn.yellow:hover{background:rgba(255,214,0,0.12);}
+
+/* ═══════════════ KPI GRID ═══════════════ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin:1.5rem 0;}
+.kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;text-align:center;position:relative;overflow:hidden;}
+.kpi-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;}
+.kpi-card.kpi-cyan::after{background:linear-gradient(90deg,transparent,var(--cyan),transparent);}
+.kpi-card.kpi-green::after{background:linear-gradient(90deg,transparent,var(--green),transparent);}
+.kpi-card.kpi-yellow::after{background:linear-gradient(90deg,transparent,var(--yellow),transparent);}
+.kpi-card.kpi-orange::after{background:linear-gradient(90deg,transparent,var(--orange),transparent);}
+.kpi-num{font-family:var(--orb);font-size:2rem;font-weight:900;margin-bottom:0.3rem;}
+.kpi-label{font-family:var(--mono);font-size:0.65rem;color:var(--text-sec);letter-spacing:2px;margin-bottom:0.3rem;}
+.kpi-desc{font-size:0.78rem;color:var(--text-dim);}
+
+/* ═══════════════ QUIZ ═══════════════ */
+.quiz-wrapper{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin:1.5rem 0;}
+.quiz-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;font-family:var(--mono);font-size:0.72rem;color:var(--text-sec);}
+.quiz-q{font-size:1rem;font-weight:600;color:var(--white);line-height:1.6;margin-bottom:1.2rem;}
+.quiz-options{display:flex;flex-direction:column;gap:0.6rem;}
+.quiz-option{background:var(--bg-card2);border:1px solid var(--border);border-radius:6px;color:var(--text-sec);font-family:var(--display);font-size:0.88rem;padding:0.8rem 1.1rem;text-align:left;cursor:pointer;transition:all 0.2s;}
+.quiz-option:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,0.06);}
+.quiz-option.correct{border-color:var(--green);background:rgba(0,230,118,0.1);color:var(--green);}
+.quiz-option.wrong{border-color:var(--red);background:rgba(255,23,68,0.08);color:var(--red);}
+.quiz-feedback{margin-top:1rem;padding:0.9rem 1.1rem;border-radius:6px;font-size:0.87rem;display:none;}
+.quiz-feedback.show-correct{display:block;background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);color:var(--white);}
+.quiz-feedback.show-wrong{display:block;background:rgba(255,23,68,0.08);border:1px solid rgba(255,23,68,0.3);color:var(--white);}
+.quiz-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.2rem;flex-wrap:wrap;gap:0.5rem;}
+.q-score-box{font-family:var(--mono);font-size:0.75rem;color:var(--text-sec);}
+#qNext{display:none;background:linear-gradient(135deg,var(--cyan),var(--teal));color:var(--bg-deep);font-family:var(--ui);font-weight:700;font-size:0.85rem;padding:0.55rem 1.4rem;border:none;border-radius:4px;cursor:pointer;}
+#qRestart{background:transparent;border:1px solid var(--orange);color:var(--orange);font-family:var(--ui);font-weight:700;font-size:0.85rem;padding:0.55rem 1.4rem;border-radius:4px;cursor:pointer;transition:all 0.2s;}
+#qRestart:hover{background:rgba(255,112,67,0.12);}
+#quizResult{display:none;text-align:center;padding:1rem;}
+.result-title{font-family:var(--display);font-size:1.5rem;font-weight:900;color:var(--cyan);margin-bottom:1rem;}
+.result-sub{color:var(--text-sec);font-size:0.92rem;line-height:1.7;margin-bottom:1.5rem;}
+
+/* ═══════════════ ERP MODULES ═══════════════ */
+.erp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0;}
+.erp-module{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem;text-align:center;transition:all 0.25s;cursor:pointer;}
+.erp-module:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,184,148,0.12);}
+.erp-module-icon{font-size:1.8rem;display:block;margin-bottom:0.6rem;}
+.erp-module-title{font-family:var(--ui);font-size:0.78rem;font-weight:700;color:var(--teal);margin-bottom:0.3rem;}
+.erp-module-desc{font-size:0.72rem;color:var(--text-dim);}
+
+/* ═══════════════ SOFTWARE SHOWCASE ═══════════════ */
+.software-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin:1.5rem 0;}
+.soft-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;transition:all 0.3s;cursor:pointer;}
+.soft-card:hover{border-color:var(--purple);transform:translateY(-3px);box-shadow:0 6px 22px rgba(124,77,255,0.15);}
+.soft-logo{font-size:1.8rem;margin-bottom:0.8rem;}
+.soft-name{font-family:var(--ui);font-size:1rem;font-weight:700;color:var(--purple);margin-bottom:0.4rem;}
+.soft-company{font-family:var(--mono);font-size:0.68rem;color:var(--text-dim);letter-spacing:1px;margin-bottom:0.6rem;}
+.soft-desc{font-size:0.82rem;color:var(--text-sec);line-height:1.6;margin-bottom:0.8rem;}
+.soft-tags{display:flex;flex-wrap:wrap;gap:0.3rem;}
+
+/* ═══════════════ FOOTER ═══════════════ */
+footer{position:relative;z-index:1;text-align:center;padding:3rem 2rem;background:var(--bg-panel);border-top:1px solid var(--border);}
+.footer-ship{font-size:3rem;margin-bottom:1rem;}
+.footer-title{font-family:var(--orb);font-size:1.1rem;color:var(--cyan);letter-spacing:4px;margin-bottom:0.5rem;}
+.footer-sub{font-family:var(--mono);font-size:0.72rem;color:var(--text-sec);letter-spacing:2px;margin-bottom:1rem;}
+.footer-author{font-size:0.88rem;color:var(--text-dim);}
+.footer-author span{color:var(--cyan);font-weight:700;}
+.footer-links{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:1rem;}
+.footer-link{color:var(--teal);font-family:var(--mono);font-size:0.7rem;text-decoration:none;border:1px solid rgba(0,184,148,0.3);padding:0.3rem 0.8rem;border-radius:3px;transition:all 0.2s;}
+.footer-link:hover{background:rgba(0,184,148,0.1);border-color:var(--teal);}
+
+/* ═══════════════ RUNNING HOURS WIDGET ═══════════════ */
+.rh-widget{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.8rem;margin:1.5rem 0;}
+.rh-inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.2rem;}
+.rh-result{background:var(--bg-deep);border:1px solid var(--border);border-radius:8px;padding:1.2rem;font-size:0.88rem;color:var(--text-sec);line-height:1.8;}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:768px){
+  nav{padding:0 1rem;}
+  .nav-logo .sub{display:none;}
+  section{padding:3rem 1.2rem;}
+  .hero-cards{gap:0.7rem;}
+  .hero-card{width:160px;padding:1rem;}
+  .modal-box{max-height:92vh;}
+}
+</style>
+</head>
+<body>
+
+<!-- ATMOSPHERE -->
+<div class="atm-grid"></div>
+<div class="atm-scanline"></div>
+<div class="atm-vignette"></div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="nav-logo">
+    ⚙️&nbsp;<span>PMS·MARITIME</span><span class="sep">&nbsp;//&nbsp;</span><span class="sub">RAFAEL SUKIRNO, CE</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#intro">HOME</a></li>
+    <li><a href="#pms-dasar">PMS DASAR</a></li>
+    <li><a href="#ism-code">ISM CODE</a></li>
+    <li><a href="#strategi">STRATEGI</a></li>
+    <li><a href="#cmms">CMMS/ERP</a></li>
+    <li><a href="#software">SOFTWARE</a></li>
+    <li><a href="#dashboard">DASHBOARD</a></li>
+    <li><a href="#simulator">SIMULATOR</a></li>
+    <li><a href="#alarm">ALARM SYS</a></li>
+    <li><a href="#kpi">KPI</a></li>
+    <li><a href="#quiz">QUIZ</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<main>
+<section id="intro">
+  <div class="hero-glow"></div>
+  <span class="ship-emoji">🚢</span>
+  <div class="hero-badge">MARITIME LEARNING PLATFORM — LEVEL: ADVANCED</div>
+  <h1 class="hero-title">PMS & ERP Kapal</h1>
+  <div class="hero-sub">PLANNED MAINTENANCE SYSTEM · ENTERPRISE RESOURCE PLANNING</div>
+  <p class="hero-desc">Panduan lengkap untuk Taruna Teknika dan Perwira Muda yang akan joint kapal. Materi mencakup ISM Code, strategi maintenance, CMMS internasional, running hours, KPI, dan simulasi real-world.</p>
+  <div class="hero-stats">
+    <div class="h-stat"><span class="h-stat-num">15+</span><span class="h-stat-label">TOPIK MATERI</span></div>
+    <div class="h-stat"><span class="h-stat-num">6</span><span class="h-stat-label">SOAL KUIS</span></div>
+    <div class="h-stat"><span class="h-stat-num">10+</span><span class="h-stat-label">REF INTERNASIONAL</span></div>
+    <div class="h-stat"><span class="h-stat-num">3</span><span class="h-stat-label">SIMULATOR AKTIF</span></div>
+  </div>
+  <div class="hero-cards">
+    <div class="hero-card" onclick="openModal('modal-pms')">
+      <div class="hero-card-icon">📋</div>
+      <h3>PMS DASAR</h3>
+      <p>Definisi, tujuan & dasar hukum PMS di kapal niaga internasional</p>
+    </div>
+    <div class="hero-card" onclick="openModal('modal-ism')">
+      <div class="hero-card-icon">⚖️</div>
+      <h3>ISM CODE</h3>
+      <p>Regulation 10 & kewajiban pemeliharaan sesuai IMO</p>
+    </div>
+    <div class="hero-card" onclick="openModal('modal-cmms')">
+      <div class="hero-card-icon">💻</div>
+      <h3>CMMS/ERP</h3>
+      <p>Software PMS internasional: AMOS, Kongsberg, DNV & lebih</p>
+    </div>
+    <div class="hero-card" onclick="openModal('modal-rh')">
+      <div class="hero-card-icon">⏱️</div>
+      <h3>RUNNING HOURS</h3>
+      <p>Standar pencatatan 12.00 UTC & integrasi ke sistem PMS</p>
+    </div>
+    <div class="hero-card" onclick="openModal('modal-psc')">
+      <div class="hero-card-icon">🔍</div>
+      <h3>PSC/SURVEY</h3>
+      <p>Apa yang dicek Port State Control & Class Surveyor</p>
+    </div>
+  </div>
+  <a href="#pms-dasar" class="btn-start">MULAI BELAJAR ↓</a>
+</section>
+
+<!-- ═══ DIVIDER ═══ -->
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 1: PMS DASAR ═══════════════ -->
+<section id="pms-dasar">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_01</div>
+    <h2 class="section-title">Apa Itu <span style="color:var(--cyan)">Planned Maintenance System?</span></h2>
+    <div class="section-desc">PMS adalah sistem terstruktur untuk merencanakan, menjadwalkan, melaksanakan, dan mendokumentasikan seluruh kegiatan pemeliharaan mesin dan peralatan di atas kapal. Ini bukan sekadar daftar jadwal — ini adalah tulang punggung keselamatan dan keandalan operasional kapal.</div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>TUJUAN UTAMA PMS</h3>
+      <ul>
+        <li>Mencegah kegagalan mesin yang tidak terduga</li>
+        <li>Memastikan kelaikan kapal setiap saat</li>
+        <li>Memenuhi persyaratan ISM Code & Class</li>
+        <li>Optimasi biaya maintenance jangka panjang</li>
+        <li>Menyediakan audit trail untuk PSC/class</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-pms')"><span class="icon">📖</span> PELAJARI DETAIL</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">📁</div>
+      <h3>KOMPONEN PMS</h3>
+      <ul>
+        <li>Equipment Register (daftar semua aset)</li>
+        <li>Maintenance Schedule (jadwal berkala)</li>
+        <li>Work Order (WO) System</li>
+        <li>Defect Report & Corrective Action</li>
+        <li>Spare Parts Inventory</li>
+        <li>History Log & Audit Trail</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-wo')"><span class="icon">📋</span> LIHAT WORK ORDER</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <h3>ALUR KERJA PMS</h3>
+      <div class="flow" style="padding:1rem;margin:0.5rem 0;">
+        <div class="flow-step">Plan</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Schedule</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Execute</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Record</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Review</div>
+      </div>
+      <button class="popup-btn" onclick="openModal('modal-alur')"><span class="icon">🔄</span> DETAIL ALUR</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>DASAR HUKUM</h3>
+      <ul>
+        <li>ISM Code — Regulation 10</li>
+        <li>SOLAS Chapter IX</li>
+        <li>MLC 2006 (crew welfare)</li>
+        <li>MARPOL (peralatan MARPOL)</li>
+        <li>Class Rules (BKI, DNV, LR, ABS...)</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-ism')"><span class="icon">⚖️</span> ISM CODE DETAIL</button>
+    </div>
+  </div>
+
+  <div class="instructor-box">
+    <div class="instr-avatar">👨‍✈️</div>
+    <div class="instr-text">
+      <strong>Rafael Sukirno, CE — Praktisi Maritim:</strong><br>
+      "PMS bukan beban administrasi — PMS adalah jimat keselamatan Anda di laut. Setiap item yang terdokumentasi dengan baik adalah bukti bahwa kapal Anda layak laut. Seorang Chief Engineer yang baik <em>hidup dan bernafas</em> di dalam sistem PMS."
+      <span class="cite">— Maritime Practitioner | CE Certified | 20+ yrs Sea Service</span>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 2: ISM CODE ═══════════════ -->
+<section id="ism-code">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_02</div>
+    <h2 class="section-title">ISM Code & <span style="color:var(--yellow)">Regulasi Internasional</span></h2>
+    <div class="section-desc">International Safety Management Code (ISM Code) adalah kerangka hukum internasional yang mewajibkan setiap kapal niaga >500 GT memiliki Safety Management System (SMS) — termasuk PMS yang terdokumentasi.</div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">📜</div>
+      <h3>ISM CODE REGULATION 10</h3>
+      <p>Mewajibkan perusahaan pelayaran untuk memastikan kapal dipelihara sesuai dengan persyaratan peraturan yang relevan dan bahwa prosedur pemeliharaan terdokumentasi dengan baik.</p>
+      <button class="popup-btn" onclick="openModal('modal-ism')"><span class="icon">⚖️</span> BACA DETAIL ISM</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏛️</div>
+      <h3>SOLAS CHAPTER IX</h3>
+      <p>SOLAS (Safety of Life at Sea) Chapter IX mewajibkan penerapan ISM Code bagi kapal-kapal niaga internasional. Ini menjadi payung hukum global atas kewajiban PMS di semua kapal komersial.</p>
+      <button class="popup-btn" onclick="openModal('modal-solas')"><span class="icon">🌊</span> TENTANG SOLAS</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔎</div>
+      <h3>PSC INSPECTION</h3>
+      <p>Port State Control officer akan memverifikasi rekaman PMS saat inspeksi. Deficiency terkait PMS adalah Non-Conformity (NC) yang bisa berujung detention kapal di pelabuhan.</p>
+      <button class="popup-btn" onclick="openModal('modal-psc')"><span class="icon">🔍</span> PERSIAPAN PSC</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎓</div>
+      <h3>CLASS SURVEY</h3>
+      <p>Annual Survey, Intermediate Survey, dan Special Survey (dry-dock) semuanya mensyaratkan catatan PMS yang lengkap dan terverifikasi. CMS (Continuous Machinery Survey) hanya bisa dijalankan jika PMS berjalan baik.</p>
+      <button class="popup-btn" onclick="openModal('modal-class')"><span class="icon">📋</span> JENIS SURVEY</button>
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Regulasi</th>
+        <th>Pengelola</th>
+        <th>Relevansi ke PMS</th>
+        <th>Konsekuensi Non-Comply</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ISM Code Reg.10</strong></td>
+        <td>IMO</td>
+        <td>Wajib dokumentasi maintenance</td>
+        <td class="bad">Non-Conformity / Detention</td>
+      </tr>
+      <tr>
+        <td><strong>SOLAS IX</strong></td>
+        <td>IMO</td>
+        <td>Kewajiban SMS termasuk PMS</td>
+        <td class="bad">Sertifikat DOC/SMC dicabut</td>
+      </tr>
+      <tr>
+        <td><strong>Class Rules</strong></td>
+        <td>DNV/BKI/LR/ABS</td>
+        <td>CMS dan survey periodik</td>
+        <td class="warn">Class dicopot, kapal off-hire</td>
+      </tr>
+      <tr>
+        <td><strong>MARPOL Annex I</strong></td>
+        <td>IMO</td>
+        <td>Perawatan OWS, ORB</td>
+        <td class="bad">Denda & pidana</td>
+      </tr>
+      <tr>
+        <td><strong>MLC 2006</strong></td>
+        <td>ILO</td>
+        <td>Keselamatan peralatan kerja crew</td>
+        <td class="warn">Inspection failure, penalty</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 3: STRATEGI MAINTENANCE ═══════════════ -->
+<section id="strategi">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_03</div>
+    <h2 class="section-title">Strategi <span style="color:var(--teal)">Maintenance Kapal</span></h2>
+    <div class="section-desc">Tidak semua komponen diperlakukan sama. Pemilihan strategi maintenance yang tepat berdasarkan kritikalitas, biaya, dan aksesibilitas sensor adalah keahlian inti seorang engineer di kapal modern.</div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">📅</div>
+      <h3>TIME-BASED MAINTENANCE (TBM)</h3>
+      <p>Perawatan berdasarkan jadwal waktu atau running hours yang telah ditetapkan. Mudah direncanakan dan diaudit oleh class/PSC.</p>
+      <ul style="margin-top:0.6rem;">
+        <li>Contoh: Ganti filter setiap 250 RH</li>
+        <li>Cocok untuk: komponen murah, interval pendek</li>
+        <li>Kelemahan: bisa terlalu dini/terlambat</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-tbm')"><span class="icon">📅</span> PELAJARI TBM</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">📡</div>
+      <h3>CONDITION-BASED MAINTENANCE (CBM)</h3>
+      <p>Perawatan berdasarkan kondisi aktual komponen, diukur melalui sensor, analisa oli, vibration monitoring, dll.</p>
+      <ul style="margin-top:0.6rem;">
+        <li>Contoh: Overhaul pompa saat vibration naik</li>
+        <li>Cocok untuk: komponen kritis, sensor tersedia</li>
+        <li>Keunggulan: efisien, tidak prematur/terlambat</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-cbm')"><span class="icon">📡</span> PELAJARI CBM</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <h3>PREDICTIVE MAINTENANCE (PdM)</h3>
+      <p>Tingkat tertinggi — menggunakan AI/ML dan big data untuk memprediksi kegagalan sebelum terjadi. Trend di kapal-kapal modern "smart ship".</p>
+      <ul style="margin-top:0.6rem;">
+        <li>Contoh: IoT sensor + machine learning</li>
+        <li>Cocok untuk: kapal LNG, VLCC, container besar</li>
+        <li>Keunggulan: zero unplanned downtime</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-pdm')"><span class="icon">🤖</span> PELAJARI PdM</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔧</div>
+      <h3>BREAKDOWN MAINTENANCE</h3>
+      <p>Perbaikan hanya dilakukan setelah komponen gagal. Strategi ini hanya ACCEPTABLE untuk komponen non-kritis dengan dampak kegagalan minimal.</p>
+      <ul style="margin-top:0.6rem;">
+        <li>Contoh: Bohlam lampu, kabel non-kritis</li>
+        <li>TIDAK cocok untuk: mesin utama, sistem keselamatan</li>
+        <li><span class="badge badge-red">⚠️ HINDARI untuk komponen kritis!</span></li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-bdm')"><span class="icon">⚠️</span> KAPAN BOLEH?</button>
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Strategi</th>
+        <th>Biaya Awal</th>
+        <th>Risiko Downtime</th>
+        <th>Cocok Untuk</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Time-Based (TBM)</strong></td><td class="warn">Sedang</td><td class="warn">Sedang</td><td>Komponen standar</td><td class="warn">★★★</td></tr>
+      <tr><td><strong>Condition-Based (CBM)</strong></td><td class="warn">Sedang-Tinggi</td><td class="good">Rendah</td><td>Komponen kritis</td><td class="good">★★★★★</td></tr>
+      <tr><td><strong>Predictive (PdM)</strong></td><td class="bad">Tinggi</td><td class="good">Sangat Rendah</td><td>Smart Ship/High value</td><td class="good">★★★★★</td></tr>
+      <tr><td><strong>Breakdown (RTF)</strong></td><td class="good">Rendah</td><td class="bad">Sangat Tinggi</td><td>Non-kritis saja</td><td class="bad">★</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 4: CMMS & ERP ═══════════════ -->
+<section id="cmms">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_04</div>
+    <h2 class="section-title">CMMS & ERP — <span style="color:var(--purple)">Software Manajemen Kapal</span></h2>
+    <div class="section-desc">CMMS (Computerized Maintenance Management System) adalah otak digital dari PMS modern. Di kapal besar, CMMS terintegrasi dengan ERP (Enterprise Resource Planning) untuk mengelola procurement, crew, finance, dan operasional secara terpadu.</div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <h3>FUNGSI UTAMA CMMS</h3>
+      <ul>
+        <li>Scheduled Maintenance Tracking</li>
+        <li>Work Order (WO) Management</li>
+        <li>Defect Report & Root Cause Analysis</li>
+        <li>Spare Parts & Inventory Control</li>
+        <li>Running Hours Recording</li>
+        <li>Audit Trail & Report Generation</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-cmms')"><span class="icon">💻</span> DETAIL CMMS</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <h3>INTEGRASI ERP</h3>
+      <ul>
+        <li>Finance & Budget Control</li>
+        <li>Procurement & PO Management</li>
+        <li>Crew Management (STCW)</li>
+        <li>Voyage Management & Charter Party</li>
+        <li>Shore Office Dashboard</li>
+        <li>Real-time Reporting ke Management</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-erp')"><span class="icon">🌐</span> DETAIL ERP</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>WORK ORDER (WO) SYSTEM</h3>
+      <p>Work Order adalah dokumen resmi yang mengotorisasi, mendokumentasikan, dan melacak pelaksanaan pekerjaan maintenance. Tanpa WO yang closed dan signed, maintenance dianggap belum dilakukan oleh auditor.</p>
+      <button class="popup-btn" onclick="openModal('modal-wo')"><span class="icon">📋</span> ALUR WORK ORDER</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <h3>ISM REQUIREMENTS untuk CMMS</h3>
+      <ul>
+        <li>Scheduled maintenance tracking ✓</li>
+        <li>Work Order management ✓</li>
+        <li>Defect reporting ✓</li>
+        <li>Audit trail verifiable ✓</li>
+        <li>Non-conformity record ✓</li>
+        <li>Corrective action tracking ✓</li>
+      </ul>
+      <button class="popup-btn" onclick="openModal('modal-ism')"><span class="icon">⚖️</span> ISM CHECKLIST</button>
+    </div>
+  </div>
+
+  <div style="margin:2rem 0;">
+    <div class="section-tag" style="margin-bottom:1rem;">// ERP MODULES</div>
+    <div class="erp-grid">
+      <div class="erp-module" onclick="openModal('modal-erp')"><span class="erp-module-icon">🔧</span><div class="erp-module-title">Maintenance</div><div class="erp-module-desc">PMS & WO</div></div>
+      <div class="erp-module" onclick="openModal('modal-erp')"><span class="erp-module-icon">📦</span><div class="erp-module-title">Inventory</div><div class="erp-module-desc">Spare Parts</div></div>
+      <div class="erp-module" onclick="openModal('modal-erp')"><span class="erp-module-icon">🛒</span><div class="erp-module-title">Procurement</div><div class="erp-module-desc">PO & Vendor</div></div>
+      <div class="erp-module" onclick="openModal('modal-erp')"><span class="erp-module-icon">👨‍✈️</span><div class="erp-module-title">Crew Mgmt</div><div class="erp-module-desc">STCW & Manning</div></div>
+      <div class="erp-module" onclick="openModal('modal-erp')"><span class="erp-module-icon">⚓</span><div class="erp-module-title">Voyage</div><div class="erp-module-desc">Port Calls</div></div>
+      <div class="erp-module" onclick="openModal('modal-erp')"><span class="erp-module-icon">💰</span><div class="erp-module-title">Finance</div><div class="erp-module-desc">OPEX/Budget</div></div>
+      <div class="erp-module" onclick="openModal('modal-erp')"><span class="erp-module-icon">📊</span><div class="erp-module-title">Reporting</div><div class="erp-module-desc">KPI & Analytics</div></div>
+      <div class="erp-module" onclick="openModal('modal-erp')"><span class="erp-module-icon">🌐</span><div class="erp-module-title">Shore Office</div><div class="erp-module-desc">Remote Access</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 5: SOFTWARE PMS INTERNASIONAL ═══════════════ -->
+<section id="software">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_05</div>
+    <h2 class="section-title">Software PMS <span style="color:var(--orange)">Internasional</span></h2>
+    <div class="section-desc">Ini adalah software CMMS/ERP yang paling banyak dipakai di kapal-kapal niaga internasional. Sebagai Taruna atau Perwira Muda, kenali nama-nama ini — kemungkinan besar Anda akan menemukannya saat join kapal.</div>
+  </div>
+
+  <div class="software-grid">
+    <div class="soft-card" onclick="openModal('modal-amos')">
+      <div class="soft-logo">⚙️</div>
+      <div class="soft-name">AMOS (SpecTec)</div>
+      <div class="soft-company">SPECTEC GROUP</div>
+      <div class="soft-desc">Platform CMMS/ERM paling populer di dunia maritim. Digunakan lebih dari 7,000 kapal di 130+ negara. Modul: Maintenance, Procurement, Crewing, Finance, Voyage.</div>
+      <div class="soft-tags">
+        <span class="badge badge-cyan">CMMS</span>
+        <span class="badge badge-cyan">ERP</span>
+        <span class="badge badge-green">ISM-Ready</span>
+      </div>
+    </div>
+    <div class="soft-card" onclick="openModal('modal-k-chief')">
+      <div class="soft-logo">🌊</div>
+      <div class="soft-name">K-Chief / K-Fleet</div>
+      <div class="soft-company">KONGSBERG MARITIME</div>
+      <div class="soft-desc">Integrated Ship Management System dari Kongsberg. K-Chief fokus di automation & monitoring, K-Fleet di fleet management. Populer di kapal Skandinavia dan offshore.</div>
+      <div class="soft-tags">
+        <span class="badge badge-cyan">AUTOMATION</span>
+        <span class="badge badge-cyan">FLEET MGMT</span>
+        <span class="badge badge-orange">IoT-Ready</span>
+      </div>
+    </div>
+    <div class="soft-card" onclick="openModal('modal-nauticus')">
+      <div class="soft-logo">🔷</div>
+      <div class="soft-name">Nauticus Ship (DNV)</div>
+      <div class="soft-company">DNV GL / VERACITY</div>
+      <div class="soft-desc">Platform manajemen kelas dan compliance dari DNV. Terintegrasi langsung dengan class society DNV untuk survey management dan hull/machinery inspection tracking.</div>
+      <div class="soft-tags">
+        <span class="badge badge-cyan">CLASS-LINKED</span>
+        <span class="badge badge-green">COMPLIANCE</span>
+      </div>
+    </div>
+    <div class="soft-card" onclick="openModal('modal-shipnet')">
+      <div class="soft-logo">🔗</div>
+      <div class="soft-name">ShipNet</div>
+      <div class="soft-company">SHIPNET SOLUTIONS</div>
+      <div class="soft-desc">ERP maritime lengkap dengan modul Maintenance, Finance, Crew, Procurement, dan Voyage. UI modern, berbasis cloud. Populer di operator Eropa dan Asia Tenggara.</div>
+      <div class="soft-tags">
+        <span class="badge badge-cyan">ERP</span>
+        <span class="badge badge-orange">CLOUD</span>
+        <span class="badge badge-green">ISM-Ready</span>
+      </div>
+    </div>
+    <div class="soft-card" onclick="openModal('modal-marinelink')">
+      <div class="soft-logo">🚀</div>
+      <div class="soft-name">MarineLink / MPM</div>
+      <div class="soft-company">OCEAN SOLUTIONS / SERTICA</div>
+      <div class="soft-desc">MPM (Maris Port Management) dan MarineLink populer di tanker dan bulk carrier. Modul maintenance, defect tracking, dan predictive analytics berbasis data historis.</div>
+      <div class="soft-tags">
+        <span class="badge badge-cyan">CMMS</span>
+        <span class="badge badge-orange">ANALYTICS</span>
+      </div>
+    </div>
+    <div class="soft-card" onclick="openModal('modal-onefleet')">
+      <div class="soft-logo">🌍</div>
+      <div class="soft-name">OneFleet / Helm Connect</div>
+      <div class="soft-company">DOCKMASTER / VARIOUS</div>
+      <div class="soft-desc">Software maintenance modern berbasis cloud untuk operator kapal kecil-menengah. Helm Connect populer di kapal tunda dan feri. Antarmuka sederhana, mobile-friendly.</div>
+      <div class="soft-tags">
+        <span class="badge badge-cyan">CLOUD</span>
+        <span class="badge badge-green">MOBILE</span>
+        <span class="badge badge-orange">SME-READY</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="instructor-box">
+    <div class="instr-avatar">🧭</div>
+    <div class="instr-text">
+      <strong>Tips dari Rafael Sukirno, CE:</strong> Saat interview join kapal, tanyakan software PMS apa yang digunakan. Kalau Anda sudah familiar dengan AMOS atau ShipNet, itu adalah nilai plus besar. Banyak shipping company besar (Maersk, MSC, NYK, Mitsui) menggunakan AMOS. Cobalah trial gratis atau versi demo yang tersedia online sebelum join.
+      <span class="cite">Referensi: SpecTec.net | Kongsberg.com | DNV.com | ShipNet.no</span>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 6: DASHBOARD PMS ═══════════════ -->
+<section id="dashboard">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_06 — LIVE DASHBOARD</div>
+    <h2 class="section-title">Dashboard PMS — <span style="color:var(--yellow)">Status Real-Time</span></h2>
+    <div class="section-desc">Tabel di bawah ini diupdate otomatis berdasarkan tanggal hari ini. Lihat komponen mana yang OVERDUE, DUE SOON, atau masih OK. Persis seperti yang ada di layar CMMS di kapal nyata.</div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem;margin-bottom:1rem;">
+    <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+      <span class="badge badge-green">✔️ OK</span>
+      <span class="badge badge-yellow">⚠️ DUE SOON (≤7 hari)</span>
+      <span class="badge badge-red">❌ OVERDUE</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.8rem;">
+      <span style="font-family:var(--mono);font-size:0.75rem;color:var(--text-sec);">COMPLIANCE:</span>
+      <span style="font-family:var(--orb);font-size:1.2rem;font-weight:900;color:var(--cyan);" id="compliancePercent">0</span>
+      <span style="font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);">%</span>
+      <div class="progress-container" style="width:100px;">
+        <div id="complianceBar" class="progress-bar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table class="pms-table" id="dynamicPmsTable">
+      <thead>
+        <tr>
+          <th>Equipment</th>
+          <th>Interval</th>
+          <th>Last Done</th>
+          <th>Next Due</th>
+          <th>Sisa (hari)</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="pmsTableBody"></tbody>
+    </table>
+  </div>
+
+  <button class="popup-btn" style="margin-top:1rem;" onclick="openModal('modal-rh')"><span class="icon">⏱️</span> TENTANG RUNNING HOURS & RECORDING</button>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 7: SIMULATOR ═══════════════ -->
+<section id="simulator">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_07 — INTERACTIVE</div>
+    <h2 class="section-title">Simulator <span style="color:var(--cyan)">Jadwal Maintenance</span></h2>
+    <div class="section-desc">Pilih komponen kapal, atur interval dan tanggal last maintenance, sistem akan menghitung Next Due Date dan status aktualnya. Sama persis seperti fitur di AMOS atau ShipNet.</div>
+  </div>
+
+  <div class="simulator">
+    <div class="sim-controls">
+      <div class="sim-field">
+        <span class="sim-label">⚙️ ASSET / KOMPONEN</span>
+        <select id="assetSelect" class="sim-select">
+          <option value="Main Engine (ME)">Main Engine — Lube Oil Change</option>
+          <option value="Aux Engine">Auxiliary Engine — Filter Service</option>
+          <option value="Purifier">Purifier — Overhaul</option>
+          <option value="Air Compressor">Air Compressor — Valve Check</option>
+          <option value="Emergency Generator">Emergency Generator — Load Test</option>
+          <option value="OWS">OWS 15ppm — Alarm Test</option>
+          <option value="Fire Pump">Fire Pump — Weekly Test</option>
+        </select>
+      </div>
+      <div class="sim-field">
+        <span class="sim-label">📅 INTERVAL (HARI)</span>
+        <input type="number" id="intervalInput" class="sim-input" value="45" step="1" min="1">
+      </div>
+      <div class="sim-field">
+        <span class="sim-label">🕒 LAST MAINTENANCE DATE</span>
+        <input type="date" id="lastDoneInput" class="sim-input">
+      </div>
+      <div>
+        <button class="btn-calc" onclick="calculateMaintenance()">HITUNG STATUS ➤</button>
+      </div>
+    </div>
+    <div class="sim-result">
+      <div class="sim-result-title">// HASIL ANALISIS PMS</div>
+      <div id="simResultMsg">Klik tombol untuk melihat prediksi jadwal maintenance berikutnya</div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 8: ALARM SYSTEM ═══════════════ -->
+<section id="alarm">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_08 — SIMULATION</div>
+    <h2 class="section-title">Alarm System & <span style="color:var(--red)">Notifikasi PMS</span></h2>
+    <div class="section-desc">Sistem CMMS modern mengirimkan alarm bertingkat: NORMAL → WARNING → OVERDUE. Klik tombol di bawah untuk mensimulasikan skenario alarm running hours seperti di kapal nyata.</div>
+  </div>
+
+  <div class="alarm-cards-row" id="alarmCardsContainer">
+    <!-- Generated by JS -->
+  </div>
+  <div class="sim-btn-row">
+    <button class="sim-btn cyan" onclick="addHours(100)">⏩ +100 Running Hours</button>
+    <button class="sim-btn yellow" onclick="addHours(50)">▶ +50 Running Hours</button>
+    <button class="sim-btn green" onclick="completeMaintenance()">✅ Complete Maintenance</button>
+    <button class="sim-btn red" onclick="resetAlarmSim()">↺ Reset Simulator</button>
+  </div>
+
+  <div class="instructor-box" style="margin-top:1.5rem;">
+    <div class="instr-avatar">⚠️</div>
+    <div class="instr-text">
+      <strong>Alarm Threshold Standard (Industri):</strong><br>
+      🟢 <strong>NORMAL</strong>: >10% dari interval tersisa | 🟡 <strong>WARNING</strong>: ≤10% interval tersisa | 🔴 <strong>OVERDUE</strong>: Melampaui next due date<br>
+      Setiap OVERDUE item yang ditemukan saat audit ISM internal atau PSC = <strong>Potential Non-Conformity</strong>.
+      <button class="popup-btn" style="margin-top:0.5rem;" onclick="openModal('modal-alarm')"><span class="icon">🔔</span> DETAIL SISTEM ALARM</button>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 9: KPI & METRICS ═══════════════ -->
+<section id="kpi">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_09</div>
+    <h2 class="section-title">KPI & Metrik <span style="color:var(--green)">Kinerja Maintenance</span></h2>
+    <div class="section-desc">Key Performance Indicator (KPI) adalah ukuran objektif seberapa efektif sistem PMS berjalan. Chief Engineer dan Superintendent Office memantau KPI ini setiap bulan.</div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-cyan">
+      <div class="kpi-num" style="color:var(--cyan)">≥85%</div>
+      <div class="kpi-label">COMPLIANCE RATE</div>
+      <div class="kpi-desc">% maintenance dilakukan tepat waktu</div>
+      <button class="popup-btn" style="margin-top:0.5rem;font-size:0.68rem;" onclick="openModal('modal-kpi')">INFO</button>
+    </div>
+    <div class="kpi-card kpi-green">
+      <div class="kpi-num" style="color:var(--green)">MTBF</div>
+      <div class="kpi-label">MEAN TIME BETWEEN FAILURES</div>
+      <div class="kpi-desc">Rata-rata jam operasi antar kegagalan</div>
+      <button class="popup-btn" style="margin-top:0.5rem;font-size:0.68rem;" onclick="openModal('modal-mtbf')">INFO</button>
+    </div>
+    <div class="kpi-card kpi-yellow">
+      <div class="kpi-num" style="color:var(--yellow)">MTTR</div>
+      <div class="kpi-label">MEAN TIME TO REPAIR</div>
+      <div class="kpi-desc">Rata-rata waktu perbaikan setelah gagal</div>
+      <button class="popup-btn" style="margin-top:0.5rem;font-size:0.68rem;" onclick="openModal('modal-mtbf')">INFO</button>
+    </div>
+    <div class="kpi-card kpi-orange">
+      <div class="kpi-num" style="color:var(--orange)">0</div>
+      <div class="kpi-label">UNPLANNED DOWNTIME</div>
+      <div class="kpi-desc">Jam off-hire akibat kegagalan mesin tak terduga</div>
+      <button class="popup-btn" style="margin-top:0.5rem;font-size:0.68rem;" onclick="openModal('modal-kpi')">INFO</button>
+    </div>
+    <div class="kpi-card kpi-cyan">
+      <div class="kpi-num" style="color:var(--cyan)">WO%</div>
+      <div class="kpi-label">WORK ORDER CLOSE RATE</div>
+      <div class="kpi-desc">% WO yang closed vs open dalam periode</div>
+      <button class="popup-btn" style="margin-top:0.5rem;font-size:0.68rem;" onclick="openModal('modal-wo')">INFO</button>
+    </div>
+    <div class="kpi-card kpi-green">
+      <div class="kpi-num" style="color:var(--green)">0</div>
+      <div class="kpi-label">PSC DEFICIENCY (MAINT)</div>
+      <div class="kpi-desc">Jumlah temuan PSC terkait maintenance</div>
+      <button class="popup-btn" style="margin-top:0.5rem;font-size:0.68rem;" onclick="openModal('modal-psc')">INFO</button>
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>KPI</th>
+        <th>Target</th>
+        <th class="good">Excellent</th>
+        <th class="warn">Good</th>
+        <th class="bad">Poor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Compliance Rate</td><td>≥85%</td><td class="good">≥95%</td><td class="warn">85–94%</td><td class="bad">&lt;85%</td></tr>
+      <tr><td>WO Close Rate</td><td>≥90%</td><td class="good">≥95%</td><td class="warn">90–94%</td><td class="bad">&lt;90%</td></tr>
+      <tr><td>Overdue Items</td><td>0</td><td class="good">0</td><td class="warn">1–2</td><td class="bad">≥3</td></tr>
+      <tr><td>PSC Deficiency (Maint)</td><td>0</td><td class="good">0</td><td class="warn">1</td><td class="bad">≥2</td></tr>
+      <tr><td>Unplanned Downtime</td><td>0 hrs</td><td class="good">0 hrs</td><td class="warn">&lt;4 hrs/mo</td><td class="bad">≥4 hrs/mo</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="sec-divider"><hr></div>
+
+<!-- ═══════════════ SECTION 10: QUIZ ═══════════════ -->
+<section id="quiz">
+  <div class="section-header">
+    <div class="section-tag">// MODULE_10 — ASSESSMENT</div>
+    <h2 class="section-title">Quiz <span style="color:var(--yellow)">PMS & ERP Kapal</span></h2>
+    <div class="section-desc">Uji pemahaman Anda dengan 6 soal esensial yang sering muncul dalam ujian kompetensi dan wawancara officer kapal. Target minimal: 5/6 benar.</div>
+  </div>
+
+  <div class="quiz-wrapper">
+    <div id="quizContainer">
+      <div class="quiz-meta">
+        <span>SOAL <span id="qNum">1</span> / <span id="qTotal">6</span></span>
+        <span>SKOR: <span id="qScore">0</span> / <span id="qMax">0</span></span>
+      </div>
+      <div class="quiz-q" id="quizQuestion"></div>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <div class="quiz-footer">
+        <span class="q-score-box">Pilih jawaban terbaik Anda</span>
+        <button id="qNext">SOAL BERIKUTNYA ➤</button>
+      </div>
+    </div>
+    <div id="quizResult" style="display:none;text-align:center;padding:1rem;">
+      <div class="result-title" id="quizFinalText"></div>
+      <div class="result-sub" id="quizFinalSub"></div>
+      <button id="qRestart">↺ ULANGI QUIZ</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-ship">🚢⚙️🌊</div>
+  <div class="footer-title">PMS & ERP MARITIME MASTERY</div>
+  <div class="footer-sub">Untuk Taruna Teknika & Perwira Muda | Siap Joint Kapal Internasional</div>
+  <div class="footer-author">© 2025 — Dibuat oleh <span>Rafael Sukirno, CE</span> | Praktisi Dunia Maritim<br>
+  <small style="color:var(--text-dim);font-size:0.75rem;">Referensi: ISM Code (IMO) · SOLAS · OCIMF · SpecTec AMOS · Kongsberg · DNV GL · MAN Energy Solutions · Wärtsilä</small></div>
+  <div class="footer-links">
+    <a class="footer-link" href="https://www.imo.org/en/OurWork/HumanElement/Pages/ISMCode.aspx" target="_blank">IMO — ISM Code</a>
+    <a class="footer-link" href="https://www.spectec.net/solutions/amos/" target="_blank">SpecTec AMOS</a>
+    <a class="footer-link" href="https://www.kongsberg.com/maritime/" target="_blank">Kongsberg Maritime</a>
+    <a class="footer-link" href="https://www.dnv.com/maritime/" target="_blank">DNV Maritime</a>
+    <a class="footer-link" href="https://www.shipnet.no/" target="_blank">ShipNet</a>
+    <a class="footer-link" href="https://www.ocimf.org/" target="_blank">OCIMF</a>
+    <a class="footer-link" href="https://www.man-es.com/marine" target="_blank">MAN Energy</a>
+    <a class="footer-link" href="https://www.wartsila.com/marine" target="_blank">Wärtsilä</a>
+  </div>
+</footer>
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     POPUP MODALS
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- MODAL: PMS DASAR -->
+<div class="modal-overlay" id="modal-pms">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">📋 Planned Maintenance System (PMS)</div>
+      <button class="modal-close" onclick="closeModal('modal-pms')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🎯 DEFINISI PMS</h4>
+        <p>Planned Maintenance System (PMS) adalah sistem terstruktur dan terdokumentasi untuk merencanakan, menjadwalkan, melaksanakan, dan merekam seluruh aktivitas pemeliharaan mesin, peralatan, dan sistem di atas kapal. PMS bukan sekadar daftar jadwal — ini adalah sistem manajemen terintegrasi yang mencakup seluruh siklus hidup peralatan kapal.</p>
+      </div>
+      <div class="modal-section">
+        <h4>🏗️ KOMPONEN UTAMA PMS</h4>
+        <ul>
+          <li><strong>Equipment Register:</strong> Database semua aset/komponen kapal beserta spesifikasi teknisnya</li>
+          <li><strong>Maintenance Schedule:</strong> Jadwal perawatan berdasarkan running hours, hari, atau kondisi</li>
+          <li><strong>Work Order (WO):</strong> Dokumen resmi otorisasi dan rekaman pelaksanaan pekerjaan</li>
+          <li><strong>Defect Report:</strong> Laporan kerusakan beserta root cause analysis dan corrective action</li>
+          <li><strong>Spare Parts Inventory:</strong> Manajemen stok suku cadang kritis</li>
+          <li><strong>History Log:</strong> Rekaman lengkap semua aktivitas maintenance per komponen</li>
+          <li><strong>Audit Trail:</strong> Log yang tidak bisa dimanipulasi untuk keperluan verifikasi ISM/PSC/Class</li>
+        </ul>
+      </div>
+      <div class="modal-highlight">💡 <strong>Fun Fact:</strong> Kapal-kapal modern dengan CMMS yang baik dapat menurunkan biaya maintenance hingga 15-25% dibanding kapal tanpa PMS terstruktur, menurut studi BIMCO 2022.</div>
+      <div class="modal-section">
+        <h4>📚 REFERENSI & BACAAN LANJUT</h4>
+        <div class="modal-links">
+          <a class="modal-link" href="https://www.imo.org/en/OurWork/HumanElement/Pages/ISMCode.aspx" target="_blank"><span class="ext-icon">🌐</span> IMO — ISM Code</a>
+          <a class="modal-link" href="https://www.bimco.org/Ships-and-Shipping/Shipping/Ship-management/Planned-Maintenance-System" target="_blank"><span class="ext-icon">🌐</span> BIMCO — PMS Guide</a>
+          <a class="modal-link" href="https://www.spectec.net/solutions/amos/" target="_blank"><span class="ext-icon">⚙️</span> SpecTec AMOS</a>
+          <a class="modal-link" href="https://www.ocimf.org/" target="_blank"><span class="ext-icon">⚓</span> OCIMF Guidelines</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ISM CODE -->
+<div class="modal-overlay" id="modal-ism">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">⚖️ ISM Code — International Safety Management</div>
+      <button class="modal-close" onclick="closeModal('modal-ism')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>📜 APA ITU ISM CODE?</h4>
+        <p>ISM Code (International Safety Management Code) adalah regulasi internasional yang diterbitkan oleh IMO (International Maritime Organization) dan diimplementasikan melalui SOLAS Chapter IX. Berlaku wajib sejak 1 July 1998 untuk kapal >500 GT yang berlayar internasional.</p>
+      </div>
+      <div class="modal-section">
+        <h4>⚓ REGULATION 10 — MAINTENANCE</h4>
+        <p>Ini adalah regulation yang langsung terkait PMS:</p>
+        <div class="modal-highlight">"The company should establish procedures to ensure that the ship is maintained in conformity with the provisions of relevant rules and regulations and with any additional requirements which may be established by the company."</div>
+        <ul>
+          <li>Perusahaan WAJIB memiliki prosedur maintenance terdokumentasi</li>
+          <li>Kapal harus dipelihara sesuai Class Rules dan regulasi relevan</li>
+          <li>Inspection harus dilakukan sesuai jadwal dan hasilnya dicatat</li>
+          <li>Deficiency harus dilaporkan dan corrective action diambil</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>🎓 DOKUMEN WAJIB ISM (SMS)</h4>
+        <ul>
+          <li>DOC — Document of Compliance (perusahaan)</li>
+          <li>SMC — Safety Management Certificate (kapal)</li>
+          <li>Safety Management System Manual</li>
+          <li>Maintenance Records & Audit Trail</li>
+          <li>Defect Report & Non-Conformity Records</li>
+        </ul>
+      </div>
+      <div class="modal-critical">🔴 <strong>PENTING:</strong> Jika rekaman PMS tidak lengkap saat audit ISM, kapal bisa mendapat Non-Conformity (NC). Akumulasi NC → SMC bisa ditarik → kapal tidak bisa berlayar!</div>
+      <div class="modal-section">
+        <h4>🔗 REFERENSI RESMI</h4>
+        <div class="modal-links">
+          <a class="modal-link" href="https://www.imo.org/en/OurWork/HumanElement/Pages/ISMCode.aspx" target="_blank"><span class="ext-icon">🌐</span> IMO — ISM Code Full Text</a>
+          <a class="modal-link" href="https://www.imo.org/en/About/Conventions/Pages/International-Convention-for-the-Safety-of-Life-at-Sea-(SOLAS).aspx" target="_blank"><span class="ext-icon">🌊</span> SOLAS Convention</a>
+          <a class="modal-link" href="https://www.classnk.or.jp/hp/en/rules_and_guidance/ism.html" target="_blank"><span class="ext-icon">📋</span> ClassNK — ISM Guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SOLAS -->
+<div class="modal-overlay" id="modal-solas">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🌊 SOLAS — Safety of Life at Sea</div>
+      <button class="modal-close" onclick="closeModal('modal-solas')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>📖 TENTANG SOLAS</h4>
+        <p>SOLAS (International Convention for the Safety of Life at Sea) adalah konvensi maritim internasional paling penting di dunia. Pertama kali diadopsi tahun 1914 pasca tragedi Titanic, direvisi terakhir secara signifikan tahun 1974, dan terus diamandemen hingga kini.</p>
+      </div>
+      <div class="modal-section">
+        <h4>📑 CHAPTER IX — SAFE MANAGEMENT</h4>
+        <p>SOLAS Chapter IX mewajibkan penerapan ISM Code bagi semua kapal niaga. Ini berarti:</p>
+        <ul>
+          <li>Semua kapal penumpang dan kargo >500 GT wajib punya SMS</li>
+          <li>Safety Management System harus mencakup PMS</li>
+          <li>Audit periodik oleh flag state dan classification society</li>
+          <li>DOC dan SMC harus valid dan di atas kapal</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>⚓ CHAPTER LAIN YANG RELEVAN</h4>
+        <ul>
+          <li><strong>Chapter II-1:</strong> Konstruksi & machinery — fire protection</li>
+          <li><strong>Chapter II-2:</strong> Fire protection, detection, extinction</li>
+          <li><strong>Chapter III:</strong> Life-saving appliances (LSA)</li>
+          <li><strong>Chapter V:</strong> Safety of navigation</li>
+          <li><strong>Chapter XII:</strong> Safety measures for bulk carriers</li>
+        </ul>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.imo.org/en/About/Conventions/Pages/International-Convention-for-the-Safety-of-Life-at-Sea-(SOLAS).aspx" target="_blank"><span class="ext-icon">🌐</span> SOLAS Full Text (IMO)</a>
+        <a class="modal-link" href="https://www.dnv.com/maritime/insights/topics/solas/" target="_blank"><span class="ext-icon">🔷</span> DNV — SOLAS Guide</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PSC -->
+<div class="modal-overlay" id="modal-psc">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔍 Port State Control (PSC) Inspection</div>
+      <button class="modal-close" onclick="closeModal('modal-psc')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🚢 APA ITU PSC?</h4>
+        <p>Port State Control adalah inspeksi yang dilakukan oleh otoritas negara pelabuhan terhadap kapal asing yang singgah. PSC officer memiliki wewenang untuk menahan kapal (detention) jika ditemukan kondisi tidak aman yang serius.</p>
+      </div>
+      <div class="modal-section">
+        <h4>🔎 APA YANG DICEK TERKAIT PMS?</h4>
+        <ul>
+          <li>Kelengkapan catatan maintenance di CMMS/logbook</li>
+          <li>Status overdue maintenance items — terutama mesin utama & keselamatan</li>
+          <li>Rekaman test peralatan keselamatan (LSA, FFA)</li>
+          <li>Oil Record Book (ORB) — terkait OWS maintenance</li>
+          <li>Sertifikat mesin dan peralatan masih valid</li>
+          <li>Bukti perbaikan temuan sebelumnya (corrective actions)</li>
+        </ul>
+      </div>
+      <div class="modal-warning">⚠️ <strong>Jika ditemukan:</strong> Banyak item overdue tanpa justifikasi yang jelas → PSC Officer bisa mengkategorikan sebagai "Poorly maintained vessel" dan mengeluarkan detention notice!</div>
+      <div class="modal-section">
+        <h4>🌍 ORGANISASI PSC REGIONAL</h4>
+        <table class="modal-table">
+          <tr><th>MOU</th><th>Wilayah</th><th>Website</th></tr>
+          <tr><td>Paris MOU</td><td>Eropa & Atlantik Utara</td><td>parismou.org</td></tr>
+          <tr><td>Tokyo MOU</td><td>Asia Pasifik</td><td>tokyo-mou.org</td></tr>
+          <tr><td>US Coast Guard</td><td>Amerika</td><td>uscg.mil</td></tr>
+          <tr><td>Indian Ocean MOU</td><td>Samudera Hindia</td><td>iomou.org</td></tr>
+        </table>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.tokyo-mou.org/" target="_blank"><span class="ext-icon">🌐</span> Tokyo MOU</a>
+        <a class="modal-link" href="https://www.parismou.org/" target="_blank"><span class="ext-icon">🌐</span> Paris MOU</a>
+        <a class="modal-link" href="https://www.uscg.mil/maritime-information/psc/" target="_blank"><span class="ext-icon">🌐</span> USCG PSC</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CLASS SURVEY -->
+<div class="modal-overlay" id="modal-class">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🎓 Class Survey — Jenis & Persiapan</div>
+      <button class="modal-close" onclick="closeModal('modal-class')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>📋 JENIS SURVEY</h4>
+        <table class="modal-table">
+          <tr><th>Jenis</th><th>Frekuensi</th><th>Cakupan</th></tr>
+          <tr><td>Annual Survey</td><td>Tahunan</td><td>Hull, safety equip, machinery</td></tr>
+          <tr><td>Intermediate Survey</td><td>2.5 tahun</td><td>Lebih detail dari annual</td></tr>
+          <tr><td>Special Survey (DD)</td><td>5 tahun</td><td>Dry-dock, seluruh kapal</td></tr>
+          <tr><td>Continuous Survey</td><td>Berkelanjutan</td><td>Per item, via CMS/CDS</td></tr>
+          <tr><td>Thickness Measurement</td><td>Per DD cycle</td><td>Hull plating</td></tr>
+        </table>
+      </div>
+      <div class="modal-section">
+        <h4>⚙️ CMS (Continuous Machinery Survey)</h4>
+        <p>CMS memungkinkan survey mesin dilakukan secara berkelanjutan (rolling) sehingga tidak semua mesin disurvey sekaligus saat dry-dock. Syarat utama CMS: PMS harus berjalan dengan baik dan terdokumentasi dengan rapi di CMMS.</p>
+      </div>
+      <div class="modal-section">
+        <h4>🏢 CLASSIFICATION SOCIETIES UTAMA</h4>
+        <ul>
+          <li><strong>DNV GL</strong> — Det Norske Veritas (Norwegia)</li>
+          <li><strong>Lloyd's Register (LR)</strong> — UK</li>
+          <li><strong>ABS</strong> — American Bureau of Shipping (USA)</li>
+          <li><strong>Bureau Veritas (BV)</strong> — Perancis</li>
+          <li><strong>ClassNK</strong> — Nippon Kaiji Kyokai (Jepang)</li>
+          <li><strong>BKI</strong> — Biro Klasifikasi Indonesia</li>
+          <li><strong>RINA</strong> — Registro Italiano Navale (Italia)</li>
+        </ul>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.dnv.com/maritime/" target="_blank"><span class="ext-icon">🔷</span> DNV Maritime</a>
+        <a class="modal-link" href="https://www.lr.org/" target="_blank"><span class="ext-icon">🌐</span> Lloyd's Register</a>
+        <a class="modal-link" href="https://www.bki.co.id/" target="_blank"><span class="ext-icon">🇮🇩</span> BKI Indonesia</a>
+        <a class="modal-link" href="https://www.iacs.org.uk/" target="_blank"><span class="ext-icon">🌐</span> IACS</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: TBM -->
+<div class="modal-overlay" id="modal-tbm">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">📅 Time-Based Maintenance (TBM)</div>
+      <button class="modal-close" onclick="closeModal('modal-tbm')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🔍 DEFINISI</h4>
+        <p>Time-Based Maintenance adalah strategi di mana perawatan dilakukan berdasarkan jadwal waktu atau running hours yang telah ditentukan sebelumnya, terlepas dari kondisi aktual komponen.</p>
+      </div>
+      <div class="modal-section">
+        <h4>✅ KELEBIHAN TBM</h4>
+        <ul>
+          <li>Mudah direncanakan dan dijadwalkan</li>
+          <li>Mudah diaudit oleh PSC dan Class</li>
+          <li>Tidak memerlukan peralatan monitoring khusus</li>
+          <li>Standard di seluruh kapal niaga dunia</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>❌ KELEMAHAN TBM</h4>
+        <ul>
+          <li>Bisa terlalu dini — buang sumber daya (over-maintenance)</li>
+          <li>Bisa terlalu terlambat — komponen sudah aus (under-maintenance)</li>
+          <li>Tidak mempertimbangkan kondisi operasi aktual</li>
+          <li>Interval ditentukan oleh OEM/Manufacturer, bukan real condition</li>
+        </ul>
+      </div>
+      <div class="modal-highlight">💡 <strong>Contoh Real di Kapal:</strong> Main Engine Top Overhaul setiap 12,000 running hours sesuai instruction manual MAN B&W atau Wärtsilä. Chief Engineer mencatat running hours di logbook setiap hari 12.00 UTC.</div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.man-es.com/marine/products/two-stroke/service/maintenance" target="_blank"><span class="ext-icon">⚙️</span> MAN Engine Maintenance</a>
+        <a class="modal-link" href="https://www.wartsila.com/marine/support/services/scheduled-maintenance" target="_blank"><span class="ext-icon">🔧</span> Wärtsilä Scheduled Maint.</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CBM -->
+<div class="modal-overlay" id="modal-cbm">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">📡 Condition-Based Maintenance (CBM)</div>
+      <button class="modal-close" onclick="closeModal('modal-cbm')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🔍 DEFINISI</h4>
+        <p>CBM adalah strategi maintenance di mana keputusan perawatan dibuat berdasarkan kondisi aktual komponen, diukur melalui berbagai parameter monitoring seperti getaran, suhu, analisa pelumas, dan lainnya.</p>
+      </div>
+      <div class="modal-section">
+        <h4>📊 TEKNIK MONITORING CBM</h4>
+        <ul>
+          <li><strong>Oil Analysis (Tribology):</strong> Analisa kandungan logam, viskositas, TBN, TAN — dikirim ke laboratorium (mis. Chevron Oronite, Castrol)</li>
+          <li><strong>Vibration Analysis:</strong> Sensor accelerometer mengukur getaran bearing, pompa, kompresor</li>
+          <li><strong>Thermography:</strong> Kamera infrared mendeteksi titik panas di panel listrik dan perpipaan</li>
+          <li><strong>Ultrasonic Testing:</strong> Mendeteksi kebocoran mikro dan keausan pada komponen</li>
+          <li><strong>Performance Monitoring:</strong> Trend tekanan, suhu, efisiensi mesin dari data logger</li>
+        </ul>
+      </div>
+      <div class="modal-highlight">💡 CBM adalah pilihan OPTIMAL untuk komponen dengan biaya sensor terjangkau dan dampak kegagalan sangat tinggi — seperti main bearing ME, turbocharger, dan sistem kemudi.</div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.dnv.com/services/condition-monitoring-5044" target="_blank"><span class="ext-icon">🔷</span> DNV Condition Monitoring</a>
+        <a class="modal-link" href="https://www.oceansigma.com/" target="_blank"><span class="ext-icon">📊</span> Ocean Sigma — CBM</a>
+        <a class="modal-link" href="https://www.marorka.com/" target="_blank"><span class="ext-icon">🌐</span> Marorka — Performance Mon.</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PdM -->
+<div class="modal-overlay" id="modal-pdm">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🤖 Predictive Maintenance (PdM) — Masa Depan</div>
+      <button class="modal-close" onclick="closeModal('modal-pdm')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🚀 APA ITU PREDICTIVE MAINTENANCE?</h4>
+        <p>PdM adalah evolusi tertinggi dari strategi maintenance, menggunakan Artificial Intelligence (AI), Machine Learning (ML), dan data dari ribuan sensor IoT untuk memprediksi kapan komponen akan gagal — sebelum itu terjadi.</p>
+      </div>
+      <div class="modal-section">
+        <h4>🛰️ TEKNOLOGI YANG DIGUNAKAN</h4>
+        <ul>
+          <li><strong>IoT Sensors:</strong> Ratusan sensor terhubung ke data platform real-time</li>
+          <li><strong>Digital Twin:</strong> Model virtual kapal yang mensimulasikan kondisi real</li>
+          <li><strong>Machine Learning:</strong> Algoritma belajar dari pola historis kegagalan</li>
+          <li><strong>Satellite Connectivity:</strong> Data vessel dikirim ke shore office via VSAT/4G LTE</li>
+          <li><strong>Cloud Analytics:</strong> Microsoft Azure, AWS digunakan oleh vendor maritim besar</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>🏢 PEMAIN UTAMA PdM MARITIM</h4>
+        <ul>
+          <li><strong>Kongsberg Maritime</strong> — K-Fleet Performance</li>
+          <li><strong>Wartsila Voyage (Eniram)</strong> — Fleet Intelligence</li>
+          <li><strong>ABB Marine (OCTOPUS)</strong> — Performance monitoring</li>
+          <li><strong>DNV Veracity</strong> — Data analytics platform</li>
+          <li><strong>Marorka</strong> — Energy management & PdM</li>
+        </ul>
+      </div>
+      <div class="modal-highlight">💡 Kapal-kapal tipe "Smart Ship" (Maersk, NYK, Mitsui OSK) sudah mengimplementasikan PdM. Chief Engineer masa depan harus familiar dengan data analytics!</div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.kongsberg.com/maritime/products/vessel-data-and-performance/" target="_blank"><span class="ext-icon">🌊</span> Kongsberg Fleet Performance</a>
+        <a class="modal-link" href="https://www.wartsila.com/voyage/products/fleet-management-and-optimisation" target="_blank"><span class="ext-icon">🚀</span> Wärtsilä Fleet Intelligence</a>
+        <a class="modal-link" href="https://www.dnv.com/services/digital-solutions-for-maritime-2745" target="_blank"><span class="ext-icon">🔷</span> DNV Digital Solutions</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: BREAKDOWN -->
+<div class="modal-overlay" id="modal-bdm">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔧 Breakdown Maintenance — Run-To-Failure</div>
+      <button class="modal-close" onclick="closeModal('modal-bdm')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>⚠️ KAPAN BREAKDOWN MAINTENANCE DIPERBOLEHKAN?</h4>
+        <p>Breakdown Maintenance (Run-to-Failure) adalah strategi di mana komponen dibiarkan beroperasi hingga gagal, baru diperbaiki. Ini HANYA acceptable untuk komponen yang memenuhi semua kriteria berikut:</p>
+        <ul>
+          <li>Non-kritis — kegagalannya tidak berdampak pada keselamatan kapal</li>
+          <li>Biaya suku cadang sangat murah</li>
+          <li>Tidak ada redundancy yang hilang</li>
+          <li>Perbaikan cepat dan mudah dilakukan</li>
+          <li>Tidak mengganggu operasi kapal</li>
+        </ul>
+      </div>
+      <div class="modal-critical">🔴 <strong>MUTLAK DILARANG</strong> untuk: Main Engine, Aux Engine (jika single), sistem bilge & ballast, steering gear, life-saving appliances, peralatan MARPOL, sistem pemadam kebakaran, dan semua komponen yang terkait keselamatan atau regulasi.</div>
+      <div class="modal-section">
+        <h4>✅ CONTOH KOMPONEN BOLEH RTF</h4>
+        <ul>
+          <li>Bohlam lampu dekoratif (non-navigasi)</li>
+          <li>Fan kecil di ruang non-kritis</li>
+          <li>Komponen komfort (AC cabin) saat cuaca tidak ekstrem</li>
+          <li>Peralatan laboratorium non-wajib</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CMMS -->
+<div class="modal-overlay" id="modal-cmms">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">💻 CMMS — Computerized Maintenance Management System</div>
+      <button class="modal-close" onclick="closeModal('modal-cmms')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🖥️ APA ITU CMMS?</h4>
+        <p>CMMS adalah software komputer yang membantu mengelola, merencanakan, melaksanakan, dan merekam semua aktivitas maintenance di kapal. Di era modern, CMMS adalah jantung dari seluruh operasional teknik kapal.</p>
+      </div>
+      <div class="modal-section">
+        <h4>✅ FITUR WAJIB CMMS MARITIM (Sesuai ISM Code)</h4>
+        <ul>
+          <li><strong>Scheduled Maintenance Tracking:</strong> Dashboard jadwal otomatis berdasarkan RH atau waktu</li>
+          <li><strong>Work Order Management:</strong> Buat, assign, approve, dan close WO secara digital</li>
+          <li><strong>Defect Reporting:</strong> Laporan kerusakan dengan foto, root cause, corrective action</li>
+          <li><strong>Audit Trail:</strong> Log tidak bisa dihapus — bisa diverifikasi class surveyor & PSC</li>
+          <li><strong>Spare Parts Inventory:</strong> Track stok, minimum stock level, reorder point</li>
+          <li><strong>Report Generation:</strong> Laporan otomatis untuk superintenden dan manajemen</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>🔗 INTEGRASI MODERN</h4>
+        <ul>
+          <li>Integrasi dengan ERP (finance, procurement)</li>
+          <li>Sinkronisasi ship-shore via satellite/internet</li>
+          <li>Mobile app untuk engineer di kapal</li>
+          <li>API ke sistem class society (DNV, LR)</li>
+          <li>Dashboard real-time untuk fleet manager di darat</li>
+        </ul>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.spectec.net/solutions/amos/" target="_blank"><span class="ext-icon">⚙️</span> SpecTec AMOS</a>
+        <a class="modal-link" href="https://www.shipnet.no/" target="_blank"><span class="ext-icon">🔗</span> ShipNet</a>
+        <a class="modal-link" href="https://www.helmconnect.com/" target="_blank"><span class="ext-icon">📱</span> Helm CONNECT</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ERP -->
+<div class="modal-overlay" id="modal-erp">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🌐 ERP Maritim — Enterprise Resource Planning</div>
+      <button class="modal-close" onclick="closeModal('modal-erp')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🏗️ ERP MARITIM vs CMMS</h4>
+        <p>CMMS fokus pada maintenance. ERP maritim adalah platform lebih luas yang mengintegrasikan SELURUH operasional bisnis pelayaran: teknik, keuangan, crew, procurement, voyage, dan pelaporan manajemen — dalam satu sistem terpadu.</p>
+      </div>
+      <div class="modal-section">
+        <h4>📦 MODUL-MODUL ERP MARITIM</h4>
+        <table class="modal-table">
+          <tr><th>Modul</th><th>Fungsi</th></tr>
+          <tr><td>🔧 Maintenance (PMS)</td><td>Work orders, schedules, history</td></tr>
+          <tr><td>📦 Inventory</td><td>Spare parts, consumables</td></tr>
+          <tr><td>🛒 Procurement</td><td>Purchase orders, vendor management</td></tr>
+          <tr><td>👨‍✈️ Crew</td><td>STCW, contracts, certification tracking</td></tr>
+          <tr><td>⚓ Voyage</td><td>Port calls, bunker, charter party</td></tr>
+          <tr><td>💰 Finance</td><td>OPEX, budget, cost allocation</td></tr>
+          <tr><td>📊 Reporting</td><td>KPI, fleet analytics, management reports</td></tr>
+          <tr><td>🌐 Shore Mgmt</td><td>Remote monitoring oleh superintendent</td></tr>
+        </table>
+      </div>
+      <div class="modal-highlight">💡 Di kapal besar (VLCC, LNG carrier, container >8000 TEU), ERP seperti AMOS atau ShipNet diakses dari kapal via internet satelit dan dari kantor pusat via web browser — 24/7, real-time.</div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.spectec.net/solutions/amos/" target="_blank"><span class="ext-icon">⚙️</span> SpecTec AMOS ERP</a>
+        <a class="modal-link" href="https://www.shipnet.no/products" target="_blank"><span class="ext-icon">🔗</span> ShipNet ERP Modules</a>
+        <a class="modal-link" href="https://www.sertica.com/" target="_blank"><span class="ext-icon">📦</span> Sertica by Logimatic</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: WORK ORDER -->
+<div class="modal-overlay" id="modal-wo">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">📋 Work Order (WO) System</div>
+      <button class="modal-close" onclick="closeModal('modal-wo')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>📝 APA ITU WORK ORDER?</h4>
+        <p>Work Order (WO) adalah dokumen resmi dalam sistem PMS yang mengotorisasi, mendokumentasikan, dan melacak pelaksanaan pekerjaan maintenance. Tanpa WO yang di-close dengan benar, pekerjaan dianggap TIDAK DILAKUKAN oleh auditor ISM, class, dan PSC.</p>
+      </div>
+      <div class="modal-section">
+        <h4>🔄 SIKLUS KERJA WO</h4>
+        <div class="flow" style="padding:1rem;margin:0.5rem 0;flex-direction:column;gap:0.4rem;">
+          <div style="display:flex;align-items:center;gap:0.5rem;"><div class="flow-step">WO Created (auto/manual)</div><div class="flow-arrow">→</div><div class="flow-step" style="color:var(--yellow)">OPEN</div></div>
+          <div style="display:flex;align-items:center;gap:0.5rem;"><div class="flow-step">Assigned to Engineer</div><div class="flow-arrow">→</div><div class="flow-step" style="color:var(--orange)">IN PROGRESS</div></div>
+          <div style="display:flex;align-items:center;gap:0.5rem;"><div class="flow-step">Job Executed & Recorded</div><div class="flow-arrow">→</div><div class="flow-step" style="color:var(--cyan)">PENDING APPROVAL</div></div>
+          <div style="display:flex;align-items:center;gap:0.5rem;"><div class="flow-step">CE/CEngineer Approves</div><div class="flow-arrow">→</div><div class="flow-step" style="color:var(--green)">CLOSED ✓</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <h4>📌 ISI WORK ORDER YANG BAIK</h4>
+        <ul>
+          <li>Equipment name & tag number</li>
+          <li>Job description — apa yang dikerjakan</li>
+          <li>Man-hours yang dihabiskan</li>
+          <li>Spare parts yang digunakan (part no, qty)</li>
+          <li>Findings — kondisi saat dibuka</li>
+          <li>Actions taken — tindakan yang dilakukan</li>
+          <li>Next due date — kapan maintenance berikutnya</li>
+          <li>Signature — Engineer yang mengerjakan + CE yang approve</li>
+        </ul>
+      </div>
+      <div class="modal-critical">🔴 WO yang tidak di-close dalam sistem = maintenance dianggap belum dilakukan. Ini adalah temuan NC (Non-Conformity) yang sangat umum dalam audit ISM!</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: RUNNING HOURS -->
+<div class="modal-overlay" id="modal-rh">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">⏱️ Running Hours — Standar Pencatatan</div>
+      <button class="modal-close" onclick="closeModal('modal-rh')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🕛 STANDAR 12.00 UTC</h4>
+        <p>Running Hours mesin kapal dicatat setiap hari pada pukul <strong>12.00 UTC (Universal Coordinated Time)</strong>. Standar ini berlaku di seluruh kapal niaga internasional agar data konsisten lintas zona waktu — dari Atlantik hingga Pasifik.</p>
+      </div>
+      <div class="modal-highlight">💡 Mengapa 12.00 UTC? Karena ini adalah "noon position" — titik tengah hari yang sudah lama menjadi standar navigasi maritim. Log book mesin diisi bersamaan dengan noon report ke perusahaan.</div>
+      <div class="modal-section">
+        <h4>📊 CARA HITUNG RUNNING HOURS</h4>
+        <ul>
+          <li>Catat reading counter mesin tiap 12.00 UTC</li>
+          <li>RH hari ini = RH counter hari ini − RH counter kemarin</li>
+          <li>Kumulatif RH = total jam operasi sejak commissioning atau last overhaul</li>
+          <li>Next due = Last done RH + interval RH</li>
+          <li>Remaining = Next due − Current RH (saat ini)</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>📋 KOMPONEN DENGAN INTERVAL RH</h4>
+        <table class="modal-table">
+          <tr><th>Komponen</th><th>Interval Umum</th><th>Catatan</th></tr>
+          <tr><td>ME Lube Oil Change</td><td>2,000–4,000 RH</td><td>Atau per lab report</td></tr>
+          <tr><td>ME Top Overhaul</td><td>8,000–12,000 RH</td><td>Per OEM manual</td></tr>
+          <tr><td>Aux Engine Filter</td><td>250–500 RH</td><td>—</td></tr>
+          <tr><td>Purifier Overhaul</td><td>8,000 RH</td><td>Per Alfa Laval/GEA manual</td></tr>
+          <tr><td>Air Compressor Valve</td><td>2,000 RH</td><td>—</td></tr>
+        </table>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.man-es.com/marine/products/two-stroke/service/maintenance-programme" target="_blank"><span class="ext-icon">⚙️</span> MAN ME Maintenance Prog.</a>
+        <a class="modal-link" href="https://www.wartsila.com/marine/support/services" target="_blank"><span class="ext-icon">🔧</span> Wärtsilä Service</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ALARM SYSTEM -->
+<div class="modal-overlay" id="modal-alarm">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔔 Alarm System PMS — Level & Eskalasi</div>
+      <button class="modal-close" onclick="closeModal('modal-alarm')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🚦 TIGA LEVEL ALARM PMS</h4>
+        <table class="modal-table">
+          <tr><th>Level</th><th>Kondisi</th><th>Threshold</th><th>Tindakan</th></tr>
+          <tr><td><span class="badge badge-green">🟢 NORMAL</span></td><td>Aman</td><td>>10% interval tersisa</td><td>Monitor rutin</td></tr>
+          <tr><td><span class="badge badge-yellow">🟡 WARNING</span></td><td>Hampir jatuh tempo</td><td>≤10% interval tersisa</td><td>Siapkan spare parts & crew</td></tr>
+          <tr><td><span class="badge badge-red">🔴 OVERDUE</span></td><td>Terlewat</td><td>Melampaui next due date</td><td>Lakukan SEGERA + laporan</td></tr>
+        </table>
+      </div>
+      <div class="modal-section">
+        <h4>📢 ESKALASI ALARM</h4>
+        <ul>
+          <li><strong>Normal:</strong> Hanya tampil di dashboard engineer kapal</li>
+          <li><strong>Warning:</strong> Notifikasi ke CE dan 2nd Engineer via email/dashboard</li>
+          <li><strong>Overdue:</strong> Notifikasi otomatis ke Superintendent Office di darat</li>
+          <li><strong>Extended Overdue:</strong> Escalation ke Fleet Manager/Technical Director</li>
+        </ul>
+      </div>
+      <div class="modal-warning">⚠️ Di kapal yang menggunakan AMOS atau ShipNet, alarm OVERDUE yang tidak di-address dalam 48 jam akan otomatis di-escalate ke kantor pusat dan bisa menjadi temuan dalam audit berikutnya.</div>
+      <div class="modal-section">
+        <h4>📝 JUSTIFIKASI OVERDUE</h4>
+        <p>Jika maintenance OVERDUE karena kondisi tertentu (cuaca buruk, tidak ada spare parts, kapal dalam voyage), Chief Engineer HARUS membuat justifikasi tertulis di sistem CMMS beserta rencana penyelesaian. Ini penting untuk audit trail ISM.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: KPI -->
+<div class="modal-overlay" id="modal-kpi">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">📊 KPI — Key Performance Indicators PMS</div>
+      <button class="modal-close" onclick="closeModal('modal-kpi')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🎯 COMPLIANCE RATE — KPI UTAMA</h4>
+        <p>Compliance Rate = (Jumlah maintenance tepat waktu / Total maintenance due) × 100%</p>
+        <table class="modal-table">
+          <tr><th>Nilai</th><th>Rating</th><th>Konsekuensi</th></tr>
+          <tr><td>>95%</td><td><span class="badge badge-green">EXCELLENT</span></td><td>Kapal bintang, bonus CE</td></tr>
+          <tr><td>85–95%</td><td><span class="badge badge-cyan">GOOD</span></td><td>Standard industri</td></tr>
+          <tr><td>70–84%</td><td><span class="badge badge-yellow">AVERAGE</span></td><td>Perlu improvement plan</td></tr>
+          <tr><td>&lt;70%</td><td><span class="badge badge-red">POOR</span></td><td>Non-Conformity, audit khusus</td></tr>
+        </table>
+      </div>
+      <div class="modal-section">
+        <h4>📈 KPI LAINNYA YANG DIPANTAU</h4>
+        <ul>
+          <li><strong>WO Close Rate:</strong> % WO yang selesai vs yang dibuka dalam periode sama</li>
+          <li><strong>Defect Rate:</strong> Jumlah defect report per bulan (tren turun = bagus)</li>
+          <li><strong>Emergency WO Ratio:</strong> % WO emergency vs planned (harus rendah)</li>
+          <li><strong>Spare Parts Consumption:</strong> vs budget — efisiensi penggunaan suku cadang</li>
+          <li><strong>PSC Deficiency Rate:</strong> Jumlah temuan PSC terkait maintenance per inspeksi</li>
+        </ul>
+      </div>
+      <div class="modal-highlight">💡 Target industri yang direkomendasikan OCIMF dan BIMCO: Compliance Rate ≥85%, WO Close Rate ≥90%, Emergency WO <15% dari total WO.</div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.ocimf.org/publications" target="_blank"><span class="ext-icon">⚓</span> OCIMF Publications</a>
+        <a class="modal-link" href="https://www.bimco.org/publications" target="_blank"><span class="ext-icon">🌐</span> BIMCO Publications</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: MTBF -->
+<div class="modal-overlay" id="modal-mtbf">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">📈 MTBF & MTTR — Reliability Metrics</div>
+      <button class="modal-close" onclick="closeModal('modal-mtbf')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>⏱️ MTBF — Mean Time Between Failures</h4>
+        <p>MTBF adalah rata-rata waktu operasi yang berlalu antara satu kegagalan dengan kegagalan berikutnya pada suatu komponen.</p>
+        <div class="modal-highlight">📐 RUMUS: MTBF = Total Running Hours ÷ Jumlah Kegagalan dalam periode tertentu</div>
+        <p>Makin tinggi nilai MTBF → makin andal komponen tersebut. MTBF digunakan untuk membandingkan keandalan antar vendor spare parts dan antar kapal dalam satu fleet.</p>
+      </div>
+      <div class="modal-section">
+        <h4>🔧 MTTR — Mean Time To Repair</h4>
+        <p>MTTR adalah rata-rata waktu yang dibutuhkan untuk memperbaiki komponen yang gagal, dari saat kegagalan ditemukan hingga komponen kembali beroperasi normal.</p>
+        <div class="modal-highlight">📐 RUMUS: MTTR = Total Repair Time ÷ Jumlah Perbaikan dalam periode tertentu</div>
+        <p>Makin rendah MTTR → makin cepat tim maintenance merespons dan menyelesaikan perbaikan. MTTR berkorelasi langsung dengan kerugian off-hire kapal.</p>
+      </div>
+      <div class="modal-section">
+        <h4>💡 CONTOH PERHITUNGAN</h4>
+        <table class="modal-table">
+          <tr><th>Komponen</th><th>Total RH</th><th>Kegagalan</th><th>MTBF</th></tr>
+          <tr><td>Cooling Water Pump #1</td><td>12,000 RH</td><td>3 kali</td><td>4,000 RH</td></tr>
+          <tr><td>FW Pump #2</td><td>12,000 RH</td><td>1 kali</td><td>12,000 RH</td></tr>
+          <tr><td>Aux Engine #1</td><td>8,000 RH</td><td>2 kali</td><td>4,000 RH</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: AMOS -->
+<div class="modal-overlay" id="modal-amos">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">⚙️ AMOS — SpecTec Group</div>
+      <button class="modal-close" onclick="closeModal('modal-amos')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🌍 TENTANG AMOS</h4>
+        <p>AMOS (Advanced Maritime Operations System) dari SpecTec Group adalah platform CMMS/ERM (Enterprise Resource Management) yang paling banyak digunakan di industri maritim global. Digunakan oleh lebih dari 7,000 kapal dari 130+ negara dan 500+ shipping companies.</p>
+      </div>
+      <div class="modal-section">
+        <h4>📦 MODUL AMOS</h4>
+        <ul>
+          <li><strong>AMOS Maintenance:</strong> PMS, Work Orders, Defect Management</li>
+          <li><strong>AMOS Procurement:</strong> PO, Vendor Management, Inventory</li>
+          <li><strong>AMOS Crewing:</strong> Crew planning, contracts, STCW tracking</li>
+          <li><strong>AMOS Financials:</strong> OPEX, budget, invoicing</li>
+          <li><strong>AMOS Business Intelligence:</strong> KPI, analytics, reporting</li>
+          <li><strong>AMOS MX (Mobile):</strong> Akses via tablet/smartphone di kapal</li>
+        </ul>
+      </div>
+      <div class="modal-highlight">💡 Perusahaan besar yang menggunakan AMOS: Maersk, MSC, NYK Line, Pacific Carriers, Stolt-Nielsen, Nordic Tankers, dan ratusan lainnya. Jika Anda join kapal besar, kemungkinan besar Anda akan memakai AMOS!</div>
+      <div class="modal-section">
+        <h4>🎓 BELAJAR AMOS</h4>
+        <p>SpecTec menyediakan training resmi dan sertifikasi AMOS. Beberapa institusi maritim menawarkan kursus pengantar AMOS. Ada juga demo version yang bisa diminta melalui website resmi mereka.</p>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.spectec.net/solutions/amos/" target="_blank"><span class="ext-icon">⚙️</span> SpecTec Official Website</a>
+        <a class="modal-link" href="https://www.spectec.net/training/" target="_blank"><span class="ext-icon">🎓</span> SpecTec Training</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: K-CHIEF -->
+<div class="modal-overlay" id="modal-k-chief">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🌊 K-Chief & K-Fleet — Kongsberg Maritime</div>
+      <button class="modal-close" onclick="closeModal('modal-k-chief')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🇳🇴 TENTANG KONGSBERG MARITIME</h4>
+        <p>Kongsberg Maritime (Norwegia) adalah salah satu perusahaan teknologi maritim terbesar di dunia. Mereka menyediakan sistem automation, navigation, sensor, dan manajemen kapal yang terintegrasi.</p>
+      </div>
+      <div class="modal-section">
+        <h4>⚙️ K-CHIEF — Integrated Automation System</h4>
+        <ul>
+          <li>Monitoring dan kontrol seluruh machinery space</li>
+          <li>Alarm management system terintegrasi</li>
+          <li>Remote monitoring dari bridge atau office</li>
+          <li>Integrasi dengan PMS untuk trigger maintenance alert</li>
+          <li>Populer di kapal-kapal offshore, AHTS, PSV, dan cruise</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>🌐 K-FLEET — Fleet Management Platform</h4>
+        <ul>
+          <li>Manajemen seluruh armada dari satu dashboard</li>
+          <li>Vessel performance monitoring & optimization</li>
+          <li>Fuel efficiency tracking (EEXI/CII compliance)</li>
+          <li>Predictive maintenance berbasis AI</li>
+          <li>Real-time data dari kapal ke shore office</li>
+        </ul>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.kongsberg.com/maritime/products/systems-and-integration/k-chief/" target="_blank"><span class="ext-icon">🌊</span> K-Chief Official</a>
+        <a class="modal-link" href="https://www.kongsberg.com/maritime/products/vessel-data-and-performance/" target="_blank"><span class="ext-icon">📊</span> K-Fleet Platform</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: DNV -->
+<div class="modal-overlay" id="modal-nauticus">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔷 DNV Veracity & Nauticus Ship</div>
+      <button class="modal-close" onclick="closeModal('modal-nauticus')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🔷 TENTANG DNV GL</h4>
+        <p>DNV (Det Norske Veritas) adalah classification society dan risk management company asal Norwegia. Selain fungsi klasifikasi, DNV menyediakan berbagai solusi digital untuk industri maritim melalui platform Veracity.</p>
+      </div>
+      <div class="modal-section">
+        <h4>🖥️ DNV VERACITY</h4>
+        <ul>
+          <li>Platform digital cloud berbasis data maritim</li>
+          <li>Survey planning dan compliance tracking</li>
+          <li>Terhubung langsung ke sistem klasifikasi DNV</li>
+          <li>Analytics untuk performance dan energy efficiency</li>
+          <li>API untuk integrasi dengan CMMS pihak ketiga</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>📋 NAUTICUS SHIP</h4>
+        <p>Nauticus Ship adalah software manajemen kapal DNV yang mencakup hull integrity management, machinery condition, survey records, dan compliance tracking — terintegrasi langsung dengan class records DNV.</p>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.dnv.com/maritime/digital-solutions/" target="_blank"><span class="ext-icon">🔷</span> DNV Digital Solutions</a>
+        <a class="modal-link" href="https://www.veracity.com/" target="_blank"><span class="ext-icon">🌐</span> DNV Veracity Platform</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SHIPNET -->
+<div class="modal-overlay" id="modal-shipnet">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔗 ShipNet — ERP Maritime Solution</div>
+      <button class="modal-close" onclick="closeModal('modal-shipnet')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🌐 TENTANG SHIPNET</h4>
+        <p>ShipNet adalah platform ERP maritim modern yang dirancang khusus untuk industri pelayaran. Berbasis cloud, dapat diakses dari mana saja termasuk di atas kapal melalui internet satelit.</p>
+      </div>
+      <div class="modal-section">
+        <h4>📦 MODUL SHIPNET</h4>
+        <ul>
+          <li>ShipNet Maintenance (CMMS penuh)</li>
+          <li>ShipNet Procurement & Inventory</li>
+          <li>ShipNet Finance (budget, OPEX, invoicing)</li>
+          <li>ShipNet Crewing (STCW, sertifikasi, contract)</li>
+          <li>ShipNet Port Agency & Voyage</li>
+          <li>ShipNet BI (business intelligence & reporting)</li>
+        </ul>
+      </div>
+      <div class="modal-highlight">💡 ShipNet digunakan oleh operator Eropa dan Asia Tenggara. UI-nya lebih modern dibanding AMOS dan cocok untuk perusahaan yang baru membangun sistem PMS digital.</div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.shipnet.no/" target="_blank"><span class="ext-icon">🔗</span> ShipNet Official</a>
+        <a class="modal-link" href="https://www.shipnet.no/products/maintenance" target="_blank"><span class="ext-icon">🔧</span> ShipNet Maintenance</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: MARINE LINK -->
+<div class="modal-overlay" id="modal-marinelink">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🚀 MarineLink / MPM / Sertica</div>
+      <button class="modal-close" onclick="closeModal('modal-marinelink')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>📊 PLATFORM CMMS LAINNYA</h4>
+        <ul>
+          <li><strong>Sertica (Logimatic):</strong> ERP maritim berbasis Denmark, populer di bulk carrier dan tanker Eropa. Modul maintenance, procurement, crewing.</li>
+          <li><strong>MPM (Maritime Planned Maintenance):</strong> Software PMS fokus untuk kapal-kapal menengah. Mudah digunakan dan affordable.</li>
+          <li><strong>Dockmaster:</strong> Platform maintenance & yard management untuk industri galangan kapal.</li>
+          <li><strong>MainMan (V.Ships):</strong> Software PMS milik V.Ships group untuk kapal-kapal yang mereka manage.</li>
+        </ul>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.sertica.com/" target="_blank"><span class="ext-icon">📦</span> Sertica by Logimatic</a>
+        <a class="modal-link" href="https://www.vships.com/" target="_blank"><span class="ext-icon">🚢</span> V.Ships Maritime</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ONEFLEET -->
+<div class="modal-overlay" id="modal-onefleet">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🌍 Helm CONNECT & Cloud CMMS</div>
+      <button class="modal-close" onclick="closeModal('modal-onefleet')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>📱 HELM CONNECT</h4>
+        <p>Helm CONNECT adalah platform cloud-based CMMS yang populer di kapal-kapal tunda (tugboat), feri, dan kapal domestik Amerika Utara. Antarmuka yang sederhana dan mobile-friendly membuatnya mudah dipelajari.</p>
+      </div>
+      <div class="modal-section">
+        <h4>✅ KEUNGGULAN CLOUD CMMS</h4>
+        <ul>
+          <li>Tidak perlu server sendiri — semua di cloud</li>
+          <li>Akses dari tablet/smartphone di kapal</li>
+          <li>Update otomatis — tidak perlu install ulang</li>
+          <li>Harga berlangganan (SaaS) — lebih terjangkau untuk operator kecil</li>
+          <li>Shore-ship synchronization otomatis</li>
+        </ul>
+      </div>
+      <div class="modal-links">
+        <a class="modal-link" href="https://www.helmconnect.com/" target="_blank"><span class="ext-icon">📱</span> Helm CONNECT</a>
+        <a class="modal-link" href="https://www.fleetio.com/marine" target="_blank"><span class="ext-icon">🌐</span> Fleetio Marine</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ALUR PMS -->
+<div class="modal-overlay" id="modal-alur">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔄 Alur Kerja PMS di Kapal</div>
+      <button class="modal-close" onclick="closeModal('modal-alur')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>🗺️ SIKLUS LENGKAP PMS</h4>
+        <p>Berikut adalah alur kerja PMS lengkap dari perencanaan hingga review, sesuai dengan persyaratan ISM Code dan best practice industri maritim internasional:</p>
+        <ol style="padding-left:1.2rem;list-style:decimal;color:var(--text-sec);font-size:0.87rem;line-height:2;">
+          <li><strong style="color:var(--cyan)">PLAN:</strong> Sistem CMMS generate maintenance schedule berdasarkan interval (RH/hari)</li>
+          <li><strong style="color:var(--cyan)">ALERT:</strong> Alarm muncul saat maintenance mendekati due date (WARNING zone)</li>
+          <li><strong style="color:var(--cyan)">PREPARE:</strong> CE/2E memeriksa ketersediaan spare parts, tools, dan crew</li>
+          <li><strong style="color:var(--cyan)">WO ISSUE:</strong> Work Order dibuat dan diassign ke engineer yang bertanggung jawab</li>
+          <li><strong style="color:var(--cyan)">EXECUTE:</strong> Pekerjaan dilaksanakan sesuai prosedur — safety permit jika diperlukan</li>
+          <li><strong style="color:var(--cyan)">RECORD:</strong> Hasil kerja dicatat di WO: findings, actions, parts used, man-hours</li>
+          <li><strong style="color:var(--cyan)">APPROVE:</strong> CE mereview dan menyetujui (sign-off) WO di CMMS</li>
+          <li><strong style="color:var(--cyan)">CLOSE:</strong> WO di-close, next due date otomatis ter-update di sistem</li>
+          <li><strong style="color:var(--cyan)">REVIEW:</strong> Monthly review KPI — compliance rate, overdue items, defect trends</li>
+          <li><strong style="color:var(--cyan)">REPORT:</strong> Laporan bulanan ke Superintendent Office via CMMS/email</li>
+        </ol>
+      </div>
+      <div class="modal-warning">⚠️ Langkah kritis yang sering terlewat: Step 8 (CLOSE WO di sistem). Banyak engineer sudah mengerjakan job, tapi lupa menutup WO di CMMS. Hasilnya: sistem tetap mencatat sebagai OVERDUE!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════════ -->
+<script>
+
+/* ═══ MODAL SYSTEM ═══ */
+function openModal(id) {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+  const m = document.getElementById(id);
+  if (m) { m.classList.add('active'); document.body.style.overflow = 'hidden'; }
+}
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (m) { m.classList.remove('active'); document.body.style.overflow = ''; }
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) { this.classList.remove('active'); document.body.style.overflow = ''; }
+  });
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { document.querySelectorAll('.modal-overlay.active').forEach(m => { m.classList.remove('active'); document.body.style.overflow = ''; }); }
+});
+
+/* ═══ PMS TABLE ═══ */
+const maintenanceItems = [
+  { name:"Main Engine — Lube Oil Sample", interval:45, lastDoneStr:"2026-02-10" },
+  { name:"Aux Engine #1 — Filter Cleaning", interval:30, lastDoneStr:"2026-03-01" },
+  { name:"Purifier — Overhaul", interval:60, lastDoneStr:"2026-01-15" },
+  { name:"Boiler — Water Test", interval:14, lastDoneStr:"2026-03-20" },
+  { name:"Emergency Generator — Load Test", interval:21, lastDoneStr:"2026-03-05" },
+  { name:"Air Compressor — Valve Check", interval:90, lastDoneStr:"2025-12-10" },
+  { name:"OWS 15ppm — Alarm Test", interval:7, lastDoneStr:"2026-03-25" },
+  { name:"Fire Pump — Weekly Test", interval:7, lastDoneStr:"2026-03-29" },
+  { name:"Steering Gear — Test", interval:7, lastDoneStr:"2026-03-30" },
+];
+
+function addDays(date, days) { const r = new Date(date); r.setDate(r.getDate() + days); return r; }
+function fmtDate(d) { let dd = new Date(d); return `${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`; }
+
+function getStatus(nextDue, today) {
+  const diff = Math.ceil((nextDue - today) / (1000*60*60*24));
+  if (diff < 0) return { cls:'badge-red', txt:'OVERDUE', type:'overdue', diff };
+  if (diff <= 7) return { cls:'badge-yellow', txt:'DUE SOON', type:'warning', diff };
+  return { cls:'badge-green', txt:'OK', type:'ok', diff };
+}
+
+function renderPmsTable() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const tbody = document.getElementById('pmsTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  let total = 0, okCount = 0;
+  maintenanceItems.forEach(item => {
+    const lastDone = new Date(item.lastDoneStr);
+    const nextDue = addDays(lastDone, item.interval);
+    const s = getStatus(nextDue, today);
+    const progress = Math.min(100, Math.max(0, ((item.interval - s.diff) / item.interval) * 100));
+    const row = tbody.insertRow();
+    if (s.type === 'overdue') row.classList.add('overdue');
+    else if (s.type === 'warning') row.classList.add('warning');
+    row.insertCell(0).innerHTML = `<strong>${item.name}</strong>`;
+    row.insertCell(1).innerHTML = `${item.interval} hari`;
+    row.insertCell(2).innerHTML = fmtDate(lastDone);
+    row.insertCell(3).innerHTML = `<strong>${fmtDate(nextDue)}</strong>`;
+    row.insertCell(4).innerHTML = s.diff < 0 ? `<span style="color:var(--red)">+${Math.abs(s.diff)} terlambat</span>` : `${s.diff} hari`;
+    row.insertCell(5).innerHTML = `<span class="badge ${s.cls}">${s.txt}</span>`;
+    const actionCell = row.insertCell(6);
+    actionCell.innerHTML = s.type === 'overdue' ? '<span style="color:var(--red);font-weight:700;">⚡ Segera lakukan!</span>' : s.type === 'warning' ? '<span style="color:var(--yellow);">⏳ Jadwalkan WO</span>' : '<span style="color:var(--teal);">✓ On Track</span>';
+    total++;
+    if (s.type === 'ok') okCount++;
+  });
+  const compliance = total ? Math.round((okCount / total) * 100) : 0;
+  document.getElementById('compliancePercent').textContent = compliance;
+  const bar = document.getElementById('complianceBar');
+  bar.style.width = compliance + '%';
+  bar.className = `progress-bar ${compliance >= 70 ? 'progress-green' : compliance >= 40 ? 'progress-yellow' : 'progress-red'}`;
+}
+
+/* ═══ SIMULATOR ═══ */
+const assetMap = {
+  'Main Engine (ME)':45,'Aux Engine':30,'Purifier':60,
+  'Air Compressor':90,'Emergency Generator':14,'OWS':7,'Fire Pump':7
+};
+const assetSelect = document.getElementById('assetSelect');
+const intervalInput = document.getElementById('intervalInput');
+const lastDoneInput = document.getElementById('lastDoneInput');
+
+if (assetSelect) {
+  assetSelect.addEventListener('change', () => {
+    const val = assetSelect.value;
+    if (assetMap[val]) intervalInput.value = assetMap[val];
+  });
+}
+
+function calculateMaintenance() {
+  const interval = parseInt(intervalInput.value);
+  const lastRaw = lastDoneInput.value;
+  const msgDiv = document.getElementById('simResultMsg');
+  if (!lastRaw || isNaN(interval) || interval <= 0) {
+    msgDiv.innerHTML = '<span style="color:var(--red)">⚠️ Isi semua field dengan benar!</span>';
+    return;
+  }
+  const lastDone = new Date(lastRaw);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const nextDue = addDays(lastDone, interval);
+  const diff = Math.ceil((nextDue - today) / (1000*60*60*24));
+  let badge, rec, prgClass;
+  if (diff < 0) {
+    badge = `<span class="badge badge-red">🔴 OVERDUE</span>`;
+    rec = `❌ Terlambat ${Math.abs(diff)} hari. Buat Work Order segera!`;
+    prgClass = 'progress-red';
+  } else if (diff <= 7) {
+    badge = `<span class="badge badge-yellow">🟡 DUE SOON</span>`;
+    rec = `⏳ Sisa ${diff} hari. Siapkan spare parts & crew sekarang.`;
+    prgClass = 'progress-yellow';
+  } else {
+    badge = `<span class="badge badge-green">🟢 ON SCHEDULE</span>`;
+    rec = `✅ Aman. Next due dalam ${diff} hari. Pantau terus.`;
+    prgClass = 'progress-green';
+  }
+  const pct = Math.min(100, Math.max(0, ((interval - diff) / interval) * 100));
+  msgDiv.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div><strong style="color:var(--cyan)">⚙️ ${assetSelect.value}</strong> &nbsp;|&nbsp; Interval: ${interval} hari</div>
+      <div>📅 Last maintenance: <strong>${fmtDate(lastDone)}</strong></div>
+      <div>📆 Next due date: <strong>${fmtDate(nextDue)}</strong> ${badge}</div>
+      <div>📌 Rekomendasi: ${rec}</div>
+      <div>📊 Progress: 
+        <div class="progress-container" style="width:100%;margin-top:4px;">
+          <div class="${prgClass} progress-bar" style="width:${pct}%;"></div>
+        </div>
+        <span style="font-size:0.72rem;color:var(--text-dim);">${Math.round(pct)}% periode terlewati</span>
+      </div>
+    </div>`;
+}
+
+function setDefaultDates() {
+  const d = new Date(); d.setDate(d.getDate() - 28);
+  if (lastDoneInput) lastDoneInput.value = fmtDate(d);
+  if (assetSelect && intervalInput) intervalInput.value = assetMap[assetSelect.value] || 45;
+  calculateMaintenance();
+}
+
+/* ═══ ALARM SIMULATION ═══ */
+const simAssets = [
+  { id:1, name:'Main Engine', icon:'⚙️', rh:12200, lastDone:12000, interval:500, defaultRh:12200 },
+  { id:2, name:'Aux Engine #1', icon:'🔩', rh:8200, lastDone:8100, interval:300, defaultRh:8200 },
+  { id:3, name:'FW Pump #1', icon:'💧', rh:4800, lastDone:1200, interval:4000, defaultRh:4800 },
+  { id:4, name:'Purifier', icon:'🌀', rh:6500, lastDone:6000, interval:500, defaultRh:6500 },
+];
+
+function getAlarmStatus(rh, nextDue, interval) {
+  const remaining = nextDue - rh;
+  const warnThreshold = interval * 0.1;
+  if (rh >= nextDue) return { level:'OVERDUE', cls:'overdue', emoji:'🔴', color:'var(--red)', action:'⚡ SEGERA lakukan maintenance!' };
+  if (remaining <= warnThreshold) return { level:'WARNING', cls:'warning', emoji:'🟡', color:'var(--yellow)', action:'⏳ Siapkan spare parts & jadwalkan WO.' };
+  return { level:'NORMAL', cls:'normal', emoji:'🟢', color:'var(--green)', action:'✓ Monitor rutin, tidak ada tindakan.' };
+}
+
+function renderAlarmCards() {
+  const container = document.getElementById('alarmCardsContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  simAssets.forEach(asset => {
+    const nextDue = asset.lastDone + asset.interval;
+    const remaining = nextDue - asset.rh;
+    const used = asset.rh - asset.lastDone;
+    const pct = Math.min(100, Math.max(0, (used / asset.interval) * 100));
+    const s = getAlarmStatus(asset.rh, nextDue, asset.interval);
+    const card = document.createElement('div');
+    card.className = 'alarm-card';
+    card.style.borderColor = s.level === 'OVERDUE' ? 'var(--red)' : s.level === 'WARNING' ? 'var(--yellow)' : 'var(--border)';
+    card.innerHTML = `
+      <div class="alarm-card-header">
+        <div class="alarm-asset-name">${asset.icon} ${asset.name}</div>
+        <div class="alarm-badge ${s.cls}">${s.emoji} ${s.level}</div>
+      </div>
+      <div class="alarm-info">Current RH: <strong>${asset.rh.toLocaleString()}</strong> | Next Due: <strong>${nextDue.toLocaleString()}</strong></div>
+      <div class="alarm-info" style="margin-bottom:0.5rem;">Sisa: <strong style="color:${s.color}">${remaining} RH</strong></div>
+      <div class="progress-container" style="width:100%;margin-bottom:0.5rem;">
+        <div class="progress-bar ${s.level==='OVERDUE'?'progress-red':s.level==='WARNING'?'progress-yellow':'progress-green'}" style="width:${pct}%;"></div>
+      </div>
+      <div class="alarm-action">${s.action}</div>`;
+    container.appendChild(card);
+  });
+}
+
+function addHours(hrs) {
+  simAssets.forEach(a => a.rh += hrs);
+  renderAlarmCards();
+}
+function completeMaintenance() {
+  simAssets.forEach(a => a.lastDone = a.rh);
+  renderAlarmCards();
+}
+function resetAlarmSim() {
+  simAssets.forEach(a => { a.rh = a.defaultRh; a.lastDone = a.defaultRh - Math.floor(a.interval * 0.4); });
+  renderAlarmCards();
+}
+
+/* ═══ QUIZ ═══ */
+const quizData = [
+  { q:"Menurut ISM Code, Regulation berapa yang mengatur kewajiban pemeliharaan kapal dan peralatan?",
+    opts:["Regulation 7","Regulation 10","Regulation 5","Regulation 12"], ans:1,
+    exp:"✅ Benar! ISM Code Regulation 10 menyebutkan: perusahaan harus memastikan kapal dipelihara sesuai peraturan relevan. Ini adalah dasar hukum PMS di seluruh kapal komersial internasional." },
+  { q:"Apa kepanjangan MTBF dalam konteks manajemen perawatan mesin kapal?",
+    opts:["Mean Time Before Failure","Mean Time Between Failures","Minimum Time Between Fixes","Maximum Time Before Fault"], ans:1,
+    exp:"✅ Benar! MTBF = Mean Time Between Failures. Makin tinggi MTBF, makin andal komponen. Dihitung: total running hours ÷ jumlah kegagalan dalam periode tertentu." },
+  { q:"Running Hours mesin kapal dicatat pada jam berapa setiap hari sebagai standar internasional?",
+    opts:["08.00 LT (Local Time)","00.00 UTC","12.00 UTC","18.00 LT"], ans:2,
+    exp:"✅ Benar! Running hours dicatat setiap hari pada 12.00 UTC (Universal Coordinated Time). Standar ini berlaku di seluruh kapal niaga internasional agar data konsisten lintas zona waktu." },
+  { q:"Strategi maintenance mana yang paling efisien untuk komponen kritis dengan biaya sensor terjangkau?",
+    opts:["Time-Based Maintenance (TBM)","Breakdown Maintenance","Condition-Based Maintenance (CBM)","Run-to-Failure"], ans:2,
+    exp:"✅ Benar! CBM adalah pilihan optimal karena maintenance dilakukan berdasarkan kondisi aktual — tidak terlalu dini (boros) atau terlambat (berbahaya). Ideal untuk komponen kritis." },
+  { q:"Fitur utama WAJIB ada dalam CMMS maritim sesuai persyaratan ISM Code adalah?",
+    opts:["Grafis 3D animasi mesin","Scheduled maintenance tracking, WO management, defect reporting, dan audit trail","Integrasi media sosial untuk laporan crew","Game simulator untuk training"], ans:1,
+    exp:"✅ Benar! ISM Code mensyaratkan CMMS minimal mampu: mencatat jadwal maintenance, membuat dan melacak WO, melaporkan defect beserta corrective action, dan menyimpan audit trail yang bisa diverifikasi class surveyor dan PSC." },
+  { q:"Bila Compliance Rate PMS sebuah kapal menunjukkan angka 58%, bagaimana penilaiannya?",
+    opts:["Excellent — target tercapai","Good — sedikit di bawah standar","Poor — di bawah standar industri, perlu tindakan korektif","Acceptable — masih dalam toleransi"], ans:2,
+    exp:"✅ Benar! Standar industri maritim menetapkan Compliance Rate ≥85% untuk rating 'Good'. Angka 58% masuk kategori 'Poor' dan biasanya menjadi temuan Non-Conformity dalam audit ISM internal maupun class/PSC." },
+];
+
+let currentQ = 0, score = 0, answered = false;
+
+function loadQuestion() {
+  answered = false;
+  const q = quizData[currentQ];
+  document.getElementById('qNum').textContent = currentQ + 1;
+  document.getElementById('qTotal').textContent = quizData.length;
+  document.getElementById('quizQuestion').textContent = q.q;
+  const fb = document.getElementById('quizFeedback');
+  fb.className = 'quiz-feedback'; fb.textContent = '';
+  const opts = document.getElementById('quizOptions');
+  opts.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = `${String.fromCharCode(65 + i)}. ${opt}`;
+    btn.addEventListener('click', () => selectOption(i, btn));
+    opts.appendChild(btn);
+  });
+  document.getElementById('qNext').style.display = 'none';
+  document.getElementById('qScore').textContent = score;
+  document.getElementById('qMax').textContent = currentQ;
+}
+
+function selectOption(idx, btn) {
+  if (answered) return;
+  answered = true;
+  const q = quizData[currentQ];
+  document.querySelectorAll('.quiz-option').forEach(b => b.style.pointerEvents = 'none');
+  const fb = document.getElementById('quizFeedback');
+  if (idx === q.ans) { btn.classList.add('correct'); fb.className = 'quiz-feedback show-correct'; score++; }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.quiz-option')[q.ans].classList.add('correct'); fb.className = 'quiz-feedback show-wrong'; }
+  fb.innerHTML = q.exp;
+  document.getElementById('qScore').textContent = score;
+  document.getElementById('qMax').textContent = currentQ + 1;
+  const nxt = document.getElementById('qNext');
+  nxt.style.display = 'inline-block';
+  nxt.textContent = currentQ < quizData.length - 1 ? 'SOAL BERIKUTNYA ➤' : 'LIHAT HASIL 🏁';
+}
+
+document.getElementById('qNext').addEventListener('click', () => {
+  currentQ++;
+  if (currentQ < quizData.length) loadQuestion();
+  else showResult();
+});
+document.getElementById('qRestart').addEventListener('click', () => {
+  currentQ = 0; score = 0;
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizContainer').style.display = 'block';
+  loadQuestion();
+});
+function showResult() {
+  document.getElementById('quizContainer').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'block';
+  const pct = Math.round((score / quizData.length) * 100);
+  let grade, sub;
+  if (pct >= 90) { grade = '🏆 EXCELLENT — C/E Level!'; sub = 'Penguasaan PMS Anda luar biasa. Siap memimpin kamar mesin!'; }
+  else if (pct >= 70) { grade = '✅ GOOD — 2nd Engineer Ready'; sub = 'Pemahaman solid. Review topik yang masih kurang dan ulangi kuis.'; }
+  else if (pct >= 50) { grade = '⚠️ AVERAGE — Perlu Review'; sub = 'Pelajari ulang materi terutama regulasi ISM Code dan strategi maintenance.'; }
+  else { grade = '❌ PERLU BELAJAR LEBIH'; sub = 'Baca ulang seluruh modul dari awal. Fokus pada definisi, regulasi, dan alur PMS.'; }
+  document.getElementById('quizFinalText').innerHTML = `${grade}<br><span style="font-size:1.4rem;font-family:var(--display)">${score} / ${quizData.length} Benar (${pct}%)</span>`;
+  document.getElementById('quizFinalSub').textContent = sub;
+}
+
+/* ═══ NAVBAR ACTIVE SCROLL ═══ */
+const secs = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+  navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+});
+
+/* ═══ INIT ═══ */
+window.addEventListener('DOMContentLoaded', () => {
+  renderPmsTable();
+  setDefaultDates();
+  renderAlarmCards();
+  loadQuestion();
+});
+setInterval(renderPmsTable, 60000);
+
+</script>
+</body>
+</html>
